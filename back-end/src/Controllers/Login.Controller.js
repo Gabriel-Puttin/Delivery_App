@@ -1,11 +1,12 @@
 const { loginService } = require('../Services/Login.Service');
 
-const loginController = async (req, res) => {
+const loginController = async (req, res, next) => {
   try {
-    const users = await loginService();
-    res.status(200).json({ message: users });
+    console.log(req.body);
+    const user = await loginService(req.body);
+    res.status(200).json({ message: user });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    next(error);
   }
 };
 
