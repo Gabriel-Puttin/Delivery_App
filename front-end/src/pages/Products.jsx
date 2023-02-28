@@ -21,7 +21,7 @@ function Products() {
           <h4
             data-testid={ `customer_products__element-card-price-${product.id}` }
           >
-            {product.price}
+            {product.price.replace('.', ',')}
           </h4>
           <img
             data-testid={ `customer_products__img-card-bg-image-${product.id}` }
@@ -42,6 +42,7 @@ function Products() {
           <input
             data-testid={ `customer_products__input-card-quantity-${product.id}` }
             type="text"
+            value={ 0 }
           />
           <button
             data-testid={ `customer_products__button-card-add-item-${product.id}` }
