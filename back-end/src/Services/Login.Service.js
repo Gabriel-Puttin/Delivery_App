@@ -1,8 +1,8 @@
-const { User } = require('../database/models');
 const md5 = require('md5');
+const { User } = require('../database/models');
 const { HttpException } = require('../middlewares/errorMiddleware');
 
-const loginService = async (userInfo) => {
+const login = async (userInfo) => {
   const { email, password } = userInfo;
   const hashPassword = md5(password);
   const user = await User.findOne({ where: { email, password: hashPassword } });
@@ -15,5 +15,5 @@ const loginService = async (userInfo) => {
 };
 
 module.exports = {
-  loginService,
+  login,
 };

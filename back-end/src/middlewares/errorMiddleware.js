@@ -4,8 +4,6 @@ const errorMiddleware = (error, _req, res, _next) => {
 };
 
 class HttpException extends Error {
-  status;
-
   constructor(status, message) {
     super(message);
     this.status = status;
