@@ -1,6 +1,7 @@
 const express = require('express');
 const { loginRoute } = require('../Routes/Login.Route');
 const errorMiddleware = require('../middlewares/errorMiddleware');
+const { registerRoute } = require('../Routes/Register.Route');
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use((_req, res, next) => {
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 app.use('/login', loginRoute);
+app.use('/register', registerRoute);
 app.use(errorMiddleware);
 
 module.exports = app;

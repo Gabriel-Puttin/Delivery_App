@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { requestLogin, setToken } from '../services/requests';
+import { useNavigate } from 'react-router-dom';
+import { requestPost, setToken } from '../services/requests';
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState({
     email: '',
     password: '',
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isLogged, setIsLogged] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
 
   useEffect(() => {
@@ -33,16 +34,18 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const user = await requestLogin('/login', login);
-      setToken(user);
+      const user = await requestPost('/login', login);
+      setToken(user.token);
       localStorage.setItem('user', JSON.stringify(user));
-      setIsLogged(true);
+      navigate('/customer/products');
     } catch (error) {
       setFailedLogin(true);
     }
   };
 
-  if (isLogged) return <Navigate to="/customer/products" />;
+  const onRegisterBtnClick = () => {
+    navigate('/register');
+  };
 
   return (
     <section>
@@ -73,6 +76,7 @@ export default function Login() {
         <button
           data-testid="common_login__button-register"
           type="button"
+          onClick={ onRegisterBtnClick }
         >
           Ainda não tenho conta
         </button>
