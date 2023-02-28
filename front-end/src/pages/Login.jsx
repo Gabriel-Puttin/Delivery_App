@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestLogin, setToken } from '../services/requests';
+import { requestPost, setToken } from '../services/requests';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -34,8 +34,8 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const user = await requestLogin('/login', login);
-      setToken(user);
+      const user = await requestPost('/login', login);
+      setToken(user.token);
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/customer/products');
     } catch (error) {
