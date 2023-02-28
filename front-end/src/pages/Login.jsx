@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { requestLogin } from '../services/requests';
 
 export default function Login() {
   const [login, setLogin] = useState({
@@ -7,6 +8,7 @@ export default function Login() {
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [failedLogin, setFailedLogin] = useState(false);
 
   useEffect(() => {
     const { email, password } = login;
@@ -25,9 +27,20 @@ export default function Login() {
     setLogin({ ...login, [target.name]: target.value });
   };
 
+  const onLoginSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const token = await requestLogin('/login', login);
+      console.log(token);
+    } catch (error) {
+      setFailedLogin(true);
+    }
+  };
+
   return (
     <section>
-      <form>
+      <form onSubmit={ onLoginSubmit }>
         <input
           data-testid="common_login__input-email"
           type="email"
@@ -58,7 +71,17 @@ export default function Login() {
           Ainda não tenho conta
         </button>
       </form>
-      <span data-testid="common_login__element-invalid-email">Mensagem de error</span>
+      {
+        (failedLogin)
+          ? (
+            <span
+              data-testid="common_login__element-invalid-email"
+            >
+              Mensagem de erro
+            </span>
+          )
+          : null
+      }
     </section>
   );
 }
