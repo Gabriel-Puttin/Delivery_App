@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { requestLogin } from '../services/requests';
+import { Navigate } from 'react-router-dom';
+import { requestLogin, setToken } from '../services/requests';
 
 export default function Login() {
   const [login, setLogin] = useState({
@@ -8,6 +9,7 @@ export default function Login() {
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
 
   useEffect(() => {
@@ -31,12 +33,16 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const token = await requestLogin('/login', login);
-      console.log(token);
+      const { token } = await requestLogin('/login', login);
+      setToken(token);
+      localStorage.setItem('token', token);
+      setIsLogged(true);
     } catch (error) {
       setFailedLogin(true);
     }
   };
+
+  if (isLogged) return <Navigate to="/customer/products" />;
 
   return (
     <section>

@@ -1,6 +1,7 @@
 const md5 = require('md5');
+const { createToken } = require('../auth');
 const { User } = require('../database/models');
-const { HttpException } = require('../middlewares/errorMiddleware');
+const HttpException = require('../utils/HttpException');
 
 const login = async (userInfo) => {
   const { email, password } = userInfo;
@@ -11,7 +12,14 @@ const login = async (userInfo) => {
     throw new HttpException(404, 'Not Found');
   }
 
-  return user;
+  const payload = {
+    email: user.email,
+    role: user.role,
+  };
+
+  const token = createToken(payload);
+
+  return token;
 };
 
 module.exports = {
