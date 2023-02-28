@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
-const secret = 'secret_key';
+const secret = fs.readFileSync('jwt.evaluation.key');
 
 const config = {
   expiresIn: '7d',

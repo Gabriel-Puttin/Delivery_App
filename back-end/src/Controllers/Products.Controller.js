@@ -7,8 +7,8 @@ const getAll = async (_req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 module.exports = {
   getAll,
-}
+};
