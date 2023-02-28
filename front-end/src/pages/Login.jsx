@@ -33,9 +33,9 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const { token } = await requestLogin('/login', login);
-      setToken(token);
-      localStorage.setItem('token', token);
+      const user = await requestLogin('/login', login);
+      setToken(user);
+      localStorage.setItem('user', JSON.stringify(user));
       setIsLogged(true);
     } catch (error) {
       setFailedLogin(true);

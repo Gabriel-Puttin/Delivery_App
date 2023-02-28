@@ -13,13 +13,17 @@ const login = async (userInfo) => {
   }
 
   const payload = {
+    name: user.name,
     email: user.email,
     role: user.role,
   };
 
   const token = createToken(payload);
 
-  return token;
+  return {
+    ...payload,
+    token,
+  };
 };
 
 module.exports = {
