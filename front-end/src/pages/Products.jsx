@@ -105,7 +105,7 @@ function Products() {
         data-testid="customer_products__button-cart"
         type="button"
         onClick={ changeRouteClick }
-        disabled
+        disabled={ totalPrice === 0 }
       >
         <span
           data-testid="customer_products__checkout-bottom-value"
