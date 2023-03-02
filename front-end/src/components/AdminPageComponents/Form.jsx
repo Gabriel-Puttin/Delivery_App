@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Form() {
   const [users, setUsers] = useState({
@@ -10,11 +10,29 @@ export default function Form() {
     isDisable: true,
   });
 
+  const [isDisabled, setIsDisabled] = useState(true);
+
   const [tipo, setTipo] = useState(['Vendedor', 'Cliente']);
   const handleChange = (event) => {
     const { target } = event;
     setUsers({ ...users, [target.name]: target.value });
   };
+
+  useEffect(() => {
+    const { nome, email, password } = users;
+    const validateLenghtName = 11;
+    const validateEmail = /\S+@\S+\.\S+/;
+    const validatePassword = 6;
+    const disabled = true;
+    if (password.length >= validatePassword
+      && validateEmail.test(email) && nome.length > validateLenghtName) {
+      setIsDisabled(!disabled);
+      console.log('caiu no if');
+    } else {
+      setIsDisabled(disabled);
+      console.log('caiu no else');
+    }
+  }, [users, isDisabled]);
 
   return (
     <form action="">
@@ -59,6 +77,7 @@ export default function Form() {
             setTipo(values);
           } }
           data-testid="admin_manage__select-role"
+          defaultValue="Vendedor"
         >
           <option value="Cliente">Cliente</option>
           <option value="Vendedor">Vendedor</option>
@@ -67,6 +86,7 @@ export default function Form() {
       <button
         data-testid="admin_manage__button-register"
         type="submit"
+        disabled={ isDisabled }
       >
         CADASTRAR
 
