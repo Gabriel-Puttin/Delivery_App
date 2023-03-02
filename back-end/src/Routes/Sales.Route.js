@@ -10,6 +10,8 @@ salesRoute.post(
   salesController.register,
 );
 
+salesRoute.get('/', validateToken, salesController.getAll);
+
 module.exports = {
   salesRoute,
 };

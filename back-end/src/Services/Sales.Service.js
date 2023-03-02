@@ -18,6 +18,12 @@ const register = async (sale) => {
   return newSale;
 };
 
+const getAll = async (userId) => {
+  const sales = await Sale.findAll({ where: { userId } });
+  return sales;
+};
+
 module.exports = {
   register,
+  getAll,
 };
