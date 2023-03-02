@@ -14,6 +14,11 @@ export default function Login() {
   const [failedLogin, setFailedLogin] = useState(false);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) return navigate('/customer/products');
+  }, [navigate]);
+
+  useEffect(() => {
     const { email, password } = login;
     const validateEmail = /\S+@\S+\.\S+/;
     const validatePassword = 6;
