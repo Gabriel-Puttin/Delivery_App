@@ -16,16 +16,10 @@ export default function Checkout() {
     setTotalPrice(total);
   }, [products]);
 
-  // const deleteItem = (index) => {
-  //   const { products } = this.state;
-
-  //   products.splice(index, 1);
-  //   this.setState(() => ({
-  //     products,
-  //   }), () => {
-  //     localStorage.setItem('cart', JSON.stringify(products));
-  //   });
-  // };
+  const onRemoveItemBtnClick = (indexToRemove) => {
+    const updatedCart = products.filter((_product, index) => index !== indexToRemove);
+    setProducts(updatedCart);
+  };
 
   return (
     <section>
@@ -61,7 +55,7 @@ export default function Checkout() {
             </p>
             <button
               type="button"
-              onClick={ () => deleteItem(index) }
+              onClick={ () => onRemoveItemBtnClick(index) }
               data-testid={ `customer_checkout__element-order-table-remove-${index}` }
             >
               Remover
