@@ -27,7 +27,7 @@ module.exports = {
       },
       total_price: {
         allowNull: false,
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
       },
       delivery_address: {
         type: Sequelize.STRING,
@@ -37,9 +37,13 @@ module.exports = {
       },
       sale_date: {
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
       },
       status: {
         type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'Pendente',
       },
     });
   },
