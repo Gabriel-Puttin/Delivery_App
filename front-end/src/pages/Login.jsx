@@ -37,7 +37,8 @@ export default function Login() {
       const user = await requestPost('/login', login);
       setToken(user.token);
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('/customer/products');
+      if (user.role === 'administrator') return navigate('/admin/manage');
+      return navigate('/customer/products');
     } catch (error) {
       setFailedLogin(true);
     }
