@@ -18,7 +18,7 @@ const login = async (userInfo) => {
     role: user.role,
   };
 
-  const token = createToken(payload);
+  const token = createToken({ ...payload, id: user.id });
 
   return {
     ...payload,
