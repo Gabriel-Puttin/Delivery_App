@@ -11,6 +11,7 @@ salesRoute.post(
 );
 
 salesRoute.get('/', validateToken, salesController.getAll);
+salesRoute.get('/:id', validateToken, salesController.getById);
 
 module.exports = {
   salesRoute,

@@ -1,4 +1,4 @@
-const { Sale, SalesProduct } = require('../database/models');
+const { Sale, SalesProduct, Product, User } = require('../database/models');
 
 const register = async (sale) => {
   const { orderInfo, products, user } = sale;
@@ -23,7 +23,21 @@ const getAll = async (userId) => {
   return sales;
 };
 
+const getById = async (id) => {
+  const sales = await Sale.findByPk(id, {
+    // include: { all: true },
+    include: [
+      { model: User, as: 'seller', attributes: ['name'] },
+      { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+    ], 
+    attributes: { exclude: ['userId', 'sellerId'] },
+  });
+
+  return sales;
+};
+
 module.exports = {
   register,
   getAll,
+  getById,
 };
