@@ -15,7 +15,12 @@ export default function Login() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user) return navigate('/customer/products');
+    if (!user) return;
+
+    const { role } = user;
+    // if (role === 'administrator') navigate('/customer/products');
+    if (role === 'seller') navigate('/seller/orders');
+    if (role === 'customer') navigate('/customer/products');
   }, [navigate]);
 
   useEffect(() => {
@@ -42,7 +47,11 @@ export default function Login() {
       const user = await requestPost('/login', login);
       setToken(user.token);
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('/customer/products');
+
+      const { role } = user;
+      // if (role === 'administrator') navigate('/customer/products');
+      if (role === 'seller') navigate('/seller/orders');
+      if (role === 'customer') navigate('/customer/products');
     } catch (error) {
       setFailedLogin(true);
     }
