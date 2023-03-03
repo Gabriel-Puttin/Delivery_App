@@ -18,9 +18,9 @@ const register = async (sale) => {
   return newSale;
 };
 
-const getAll = async (userId) => {
-  const sales = await Sale.findAll({ where: { userId } });
-  return sales;
+const getAll = async (user) => {
+  if (user.role === 'customer') return Sale.findAll({ where: { userId: user.id } });
+  if (user.role === 'seller') return Sale.findAll({ where: { sellerId: user.id } });
 };
 
 const getById = async (id) => {
