@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestPost, setToken } from '../services/requests';
 
+const adminHome = '/admin/manage';
+const sellerHome = '/seller/orders';
+const customerHome = '/customer/products';
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -18,9 +22,9 @@ export default function Login() {
     if (!user) return;
 
     const { role } = user;
-    // if (role === 'administrator') navigate('/customer/products');
-    if (role === 'seller') navigate('/seller/orders');
-    if (role === 'customer') navigate('/customer/products');
+    if (role === 'administrator') navigate(adminHome);
+    if (role === 'seller') navigate(sellerHome);
+    if (role === 'customer') navigate(customerHome);
   }, [navigate]);
 
   useEffect(() => {
@@ -49,9 +53,9 @@ export default function Login() {
       localStorage.setItem('user', JSON.stringify(user));
 
       const { role } = user;
-      // if (role === 'administrator') navigate('/customer/products');
-      if (role === 'seller') navigate('/seller/orders');
-      if (role === 'customer') navigate('/customer/products');
+      if (role === 'administrator') navigate(adminHome);
+      if (role === 'seller') navigate(sellerHome);
+      if (role === 'customer') navigate(customerHome);
     } catch (error) {
       setFailedLogin(true);
     }

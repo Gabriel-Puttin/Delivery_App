@@ -5,6 +5,7 @@ const { registerRoute } = require('../Routes/Register.Route');
 const productsRoute = require('../Routes/Products.Route');
 const { userRoute } = require('../Routes/User.Route');
 const { salesRoute } = require('../Routes/Sales.Route');
+const { adminRoute } = require('../Routes/Admin.Route');
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use('/register', registerRoute);
 app.use('/users', userRoute);
 app.use('/products', productsRoute);
 app.use('/sales', salesRoute);
+app.use('/admin', adminRoute);
 app.use(errorMiddleware);
 
 module.exports = app;
