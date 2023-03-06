@@ -4,20 +4,20 @@ import moment from 'moment';
 import { requestData, requestUpdate } from '../services/requests';
 import NavBar from '../components/NavBar';
 
-const orderId = 'customer_order_details__element-order-details-label-order-id';
-const sellerId = 'customer_order_details__element-order-details-label-seller-name';
-const dateId = 'customer_order_details__element-order-details-label-order-date';
-const statusId = 'customer_order_details__element-order-details-label-delivery-status';
-const checkDeliveryId = 'customer_order_details__button-delivery-check';
+const orderId = 'seller_order_details__element-order-details-label-order-id';
+const dateId = 'seller_order_details__element-order-details-label-order-date';
+const statusId = 'seller_order_details__element-order-details-label-delivery-status';
+const preparingCheckId = 'seller_order_details__button-preparing-check';
+const dispatchCheckId = 'seller_order_details__button-dispatch-check';
 
-const itemNumberId = 'customer_order_details__element-order-table-item-number';
-const nameId = 'customer_order_details__element-order-table-name';
-const quantityId = 'customer_order_details__element-order-table-quantity';
-const unitPriceId = 'customer_order_details__element-order-table-unit-price';
-const subTotalId = 'customer_order_details__element-order-table-sub-total';
-const totalId = 'customer_order_details__element-order-total-price';
+const itemNumberId = 'seller_order_details__element-order-table-item-number';
+const nameId = 'seller_order_details__element-order-table-name';
+const quantityId = 'seller_order_details__element-order-table-quantity';
+const unitPriceId = 'seller_order_details__element-order-table-unit-price';
+const subTotalId = 'seller_order_details__element-order-table-sub-total';
+const totalId = 'seller_order_details__element-order-total-price';
 
-function OrdersDetails() {
+function SellerOrdersDetails() {
   const [order, setOrder] = useState();
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -50,36 +50,38 @@ function OrdersDetails() {
   return (
     <section>
       <NavBar />
-      { order && (
+      {order && (
         <div>
           <p
             data-testid={ orderId }
           >
-            { order.id }
-          </p>
-          <p
-            data-testid={ sellerId }
-          >
-            { order.seller.name }
-
+            {order.id}
           </p>
           <p
             data-testid={ dateId }
           >
-            { moment(order.saleDate).format('DD/MM/YYYY') }
+            {moment(order.saleDate).format('DD/MM/YYYY')}
           </p>
           <p
             data-testid={ `${statusId}${order.id}` }
           >
-            { order.status }
+            {order.status}
           </p>
           <button
             type="button"
-            data-testid={ checkDeliveryId }
-            disabled={ order.status !== 'Em Trânsito' }
-            onClick={ async () => handleClick('Entregue') }
+            data-testid={ preparingCheckId }
+            disabled={ order.status !== 'Pendente' }
+            onClick={ async () => handleClick('Preparando') }
           >
-            Marcar como entregue
+            PREPARAR PEDIDO
+          </button>
+          <button
+            type="button"
+            data-testid={ dispatchCheckId }
+            disabled={ order.status !== 'Preparando' }
+            onClick={ async () => handleClick('Em Trânsito') }
+          >
+            SAIU PARA ENTREGA
           </button>
         </div>
 
@@ -125,7 +127,7 @@ function OrdersDetails() {
         <p
           data-testid={ totalId }
         >
-          { totalPrice.toFixed(2).toString().replace('.', ',') }
+          {totalPrice.toFixed(2).toString().replace('.', ',')}
         </p>
 
       </div>
@@ -133,4 +135,4 @@ function OrdersDetails() {
   );
 }
 
-export default OrdersDetails;
+export default SellerOrdersDetails;
