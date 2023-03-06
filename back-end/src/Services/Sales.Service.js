@@ -1,4 +1,4 @@
-const { Sale, SalesProduct } = require('../database/models');
+const { Sale, SalesProduct, Product, User } = require('../database/models');
 
 const register = async (sale) => {
   const { orderInfo, products, user } = sale;
@@ -18,6 +18,32 @@ const register = async (sale) => {
   return newSale;
 };
 
+const getAll = async (user) => {
+  if (user.role === 'customer') return Sale.findAll({ where: { userId: user.id } });
+  if (user.role === 'seller') return Sale.findAll({ where: { sellerId: user.id } });
+};
+
+const getById = async (id) => {
+  const sales = await Sale.findByPk(id, {
+    // include: { all: true },
+    include: [
+      { model: User, as: 'seller', attributes: ['name'] },
+      { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+    ], 
+    attributes: { exclude: ['userId', 'sellerId'] },
+  });
+
+  return sales;
+};
+
+const update = async (id, body) => {
+  const { status } = body;
+  return Sale.update({ status }, { where: { id } });
+};
+
 module.exports = {
   register,
+  getAll,
+  getById,
+  update,
 };

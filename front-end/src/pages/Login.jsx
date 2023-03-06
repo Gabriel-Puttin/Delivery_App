@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestPost, setToken } from '../services/requests';
 
+const adminHome = '/admin/manage';
+const sellerHome = '/seller/orders';
+const customerHome = '/customer/products';
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -12,6 +16,16 @@ export default function Login() {
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [failedLogin, setFailedLogin] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) return;
+
+    const { role } = user;
+    if (role === 'administrator') navigate(adminHome);
+    if (role === 'seller') navigate(sellerHome);
+    if (role === 'customer') navigate(customerHome);
+  }, [navigate]);
 
   useEffect(() => {
     const { email, password } = login;
@@ -37,8 +51,11 @@ export default function Login() {
       const user = await requestPost('/login', login);
       setToken(user.token);
       localStorage.setItem('user', JSON.stringify(user));
-      if (user.role === 'administrator') return navigate('/admin/manage');
-      return navigate('/customer/products');
+
+      const { role } = user;
+      if (role === 'administrator') navigate(adminHome);
+      if (role === 'seller') navigate(sellerHome);
+      if (role === 'customer') navigate(customerHome);
     } catch (error) {
       setFailedLogin(true);
     }
