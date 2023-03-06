@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { requestPost } from '../../services/requests';
 
 export default function Form() {
   const [users, setUsers] = useState({
     item: '',
-    nome: '',
+    name: '',
     email: '',
     password: '',
     excluir: '',
@@ -12,36 +13,47 @@ export default function Form() {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [tipo, setTipo] = useState(['Vendedor', 'Cliente']);
+  const [tipo, setTipo] = useState('seller');
   const handleChange = (event) => {
     const { target } = event;
     setUsers({ ...users, [target.name]: target.value });
   };
 
   useEffect(() => {
-    const { nome, email, password } = users;
+    const { name, email, password } = users;
     const validateLenghtName = 11;
     const validateEmail = /\S+@\S+\.\S+/;
     const validatePassword = 6;
     const disabled = true;
     if (password.length >= validatePassword
-      && validateEmail.test(email) && nome.length > validateLenghtName) {
+      && validateEmail.test(email) && name.length > validateLenghtName) {
       setIsDisabled(!disabled);
-      console.log('caiu no if');
     } else {
       setIsDisabled(disabled);
-      console.log('caiu no else');
     }
   }, [users, isDisabled]);
 
+  const onRegisterSubmit = async (event) => {
+    event.preventDefault();
+    const { name, password, email } = users;
+    const userInfo = { name, password, email, tipo };
+    console.log(userInfo);
+    try {
+      const user = await requestPost('/admin/manage', userInfo);
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
-    <form action="">
+    <form onSubmit={ onRegisterSubmit }>
       <label htmlFor="name">
-        nome
+        name
         <input
-          value={ users.nome }
+          value={ users.name }
           data-testid="admin_manage__input-name"
-          name="nome"
+          name="name"
           type="text"
           onChange={ handleChange }
         />
@@ -69,18 +81,15 @@ export default function Form() {
       <label htmlFor="select">
         Tipo
         <select
-          value={ tipo }
           name="tipo"
+          value={ tipo }
           onChange={ (e) => {
-            const options = [...e.target.selectedOptions];
-            const values = options.map((option) => option.value);
-            setTipo(values);
+            setTipo(e.target.value);
           } }
           data-testid="admin_manage__select-role"
-          defaultValue="Vendedor"
         >
-          <option value="Cliente">Cliente</option>
-          <option value="Vendedor">Vendedor</option>
+          <option value="customer">Cliente</option>
+          <option value="seller">Vendedor</option>
         </select>
       </label>
       <button

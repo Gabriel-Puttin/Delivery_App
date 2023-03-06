@@ -14,8 +14,13 @@ export const requestData = async (endpoint) => {
 };
 
 export const requestPost = async (endpoint, body) => {
-  const { data } = await api.post(endpoint, body);
-  return data;
+  try {
+    const { data } = await api.post(endpoint, body);
+    console.log(body);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export default api;
