@@ -39,7 +39,7 @@ const getById = async (id) => {
 const update = async (id, body) => {
   const { status } = body;
   return Sale.update({ status }, { where: { id } });
-}
+};
 
 module.exports = {
   register,
