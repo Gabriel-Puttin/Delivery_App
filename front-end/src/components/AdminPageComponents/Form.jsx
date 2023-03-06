@@ -12,6 +12,7 @@ export default function Form() {
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [failedRegister, setFailedRegister] = useState(false);
 
   const [tipo, setTipo] = useState('seller');
   const handleChange = (event) => {
@@ -37,69 +38,82 @@ export default function Form() {
     event.preventDefault();
     const { name, password, email } = users;
     const userInfo = { name, password, email, tipo };
-    console.log(userInfo);
     try {
       const user = await requestPost('/admin/manage', userInfo);
       console.log(user);
     } catch (error) {
-      console.log(error.message);
+      setFailedRegister(true);
     }
   };
 
   return (
-    <form onSubmit={ onRegisterSubmit }>
-      <label htmlFor="name">
-        name
-        <input
-          value={ users.name }
-          data-testid="admin_manage__input-name"
-          name="name"
-          type="text"
-          onChange={ handleChange }
-        />
-      </label>
-      Email
-      <label htmlFor="email">
-        <input
-          value={ users.email }
-          name="email"
-          data-testid="admin_manage__input-email"
-          type="email"
-          onChange={ handleChange }
-        />
-      </label>
-      Senha
-      <label htmlFor="password">
-        <input
-          value={ users.password }
-          name="password"
-          data-testid="admin_manage__input-password"
-          type="password"
-          onChange={ handleChange }
-        />
-      </label>
-      <label htmlFor="select">
-        Tipo
-        <select
-          name="tipo"
-          value={ tipo }
-          onChange={ (e) => {
-            setTipo(e.target.value);
-          } }
-          data-testid="admin_manage__select-role"
-        >
-          <option value="customer">Cliente</option>
-          <option value="seller">Vendedor</option>
-        </select>
-      </label>
-      <button
-        data-testid="admin_manage__button-register"
-        type="submit"
-        disabled={ isDisabled }
-      >
-        CADASTRAR
+    <section>
 
-      </button>
-    </form>
+      <form onSubmit={ onRegisterSubmit }>
+        <label htmlFor="name">
+          name
+          <input
+            value={ users.name }
+            data-testid="admin_manage__input-name"
+            name="name"
+            type="text"
+            onChange={ handleChange }
+          />
+        </label>
+        Email
+        <label htmlFor="email">
+          <input
+            value={ users.email }
+            name="email"
+            data-testid="admin_manage__input-email"
+            type="email"
+            onChange={ handleChange }
+          />
+        </label>
+        Senha
+        <label htmlFor="password">
+          <input
+            value={ users.password }
+            name="password"
+            data-testid="admin_manage__input-password"
+            type="password"
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="select">
+          Tipo
+          <select
+            name="tipo"
+            value={ tipo }
+            onChange={ (e) => {
+              setTipo(e.target.value);
+            } }
+            data-testid="admin_manage__select-role"
+          >
+            <option value="customer">Cliente</option>
+            <option value="seller">Vendedor</option>
+          </select>
+        </label>
+        <button
+          data-testid="admin_manage__button-register"
+          type="submit"
+          disabled={ isDisabled }
+        >
+          CADASTRAR
+
+        </button>
+      </form>
+      {
+        (failedRegister)
+          ? (
+            <span
+              data-testid="admin_manage__element-invalid-register"
+            >
+              Mensagem de erro
+            </span>
+          )
+          : null
+      }
+    </section>
   );
 }

@@ -14,13 +14,8 @@ export const requestData = async (endpoint) => {
 };
 
 export const requestPost = async (endpoint, body) => {
-  try {
-    const { data } = await api.post(endpoint, body);
-    console.log(body);
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
+  const { data } = await api.post(endpoint, body);
+  return data;
 };
 
 export const requestUpdate = async (endpoint, body) => {
