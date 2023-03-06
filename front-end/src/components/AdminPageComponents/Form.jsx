@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { requestPost } from '../../services/requests';
+import { requestData, requestDelete, requestPost } from '../../services/requests';
 
 export default function Form() {
-  const [users, setUsers] = useState({
+  const [userForm, setUserForm] = useState({
     item: '',
     name: '',
     email: '',
@@ -11,17 +11,27 @@ export default function Form() {
     isDisable: true,
   });
 
+  const [users, setUsers] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [failedRegister, setFailedRegister] = useState(false);
 
   const [tipo, setTipo] = useState('seller');
   const handleChange = (event) => {
     const { target } = event;
-    setUsers({ ...users, [target.name]: target.value });
+    setUserForm({ ...userForm, [target.name]: target.value });
+  };
+
+  const fetchUsers = async () => {
+    const userList = await requestData('/users');
+    setUsers(userList);
   };
 
   useEffect(() => {
-    const { name, email, password } = users;
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const { name, email, password } = userForm;
     const validateLenghtName = 11;
     const validateEmail = /\S+@\S+\.\S+/;
     const validatePassword = 6;
@@ -32,18 +42,23 @@ export default function Form() {
     } else {
       setIsDisabled(disabled);
     }
-  }, [users, isDisabled]);
+  }, [userForm, isDisabled]);
 
   const onRegisterSubmit = async (event) => {
     event.preventDefault();
-    const { name, password, email } = users;
+    const { name, password, email } = userForm;
     const userInfo = { name, password, email, tipo };
     try {
-      const user = await requestPost('/admin/manage', userInfo);
-      console.log(user);
+      await requestPost('/admin/manage', userInfo);
+      return fetchUsers();
     } catch (error) {
       setFailedRegister(true);
     }
+  };
+
+  const onRemoveBtnClick = async (userId) => {
+    await requestDelete(`/users/${userId}`);
+    return fetchUsers();
   };
 
   return (
@@ -53,7 +68,7 @@ export default function Form() {
         <label htmlFor="name">
           name
           <input
-            value={ users.name }
+            value={ userForm.name }
             data-testid="admin_manage__input-name"
             name="name"
             type="text"
@@ -63,7 +78,7 @@ export default function Form() {
         Email
         <label htmlFor="email">
           <input
-            value={ users.email }
+            value={ userForm.email }
             name="email"
             data-testid="admin_manage__input-email"
             type="email"
@@ -73,7 +88,7 @@ export default function Form() {
         Senha
         <label htmlFor="password">
           <input
-            value={ users.password }
+            value={ userForm.password }
             name="password"
             data-testid="admin_manage__input-password"
             type="password"
@@ -114,6 +129,35 @@ export default function Form() {
           )
           : null
       }
+      <table>
+
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={ `user-${index}` }>
+              <td data-testid={ `admin_manage__element-user-table-item-number-${index}` }>
+                {index + 1}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-name-${index}` }>
+                {user.name}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-email-${index}` }>
+                {user.email}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-role-${index}` }>
+                {user.role}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-remove-${index}` }>
+                <button
+                  type="button"
+                  onClick={ async () => onRemoveBtnClick(user.id) }
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </section>
   );
 }
