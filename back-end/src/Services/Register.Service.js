@@ -23,7 +23,7 @@ const register = async (userInfo) => {
 const registerFromAdmin = async (reqBody) => {
   const { email, password, user, name } = reqBody;
   console.log(reqBody);
-  if(user.role !== 'administrator') throw new HttpException(401, 'unauthorized')
+  if (user.role !== 'administrator') throw new HttpException(401, 'unauthorized');
 
   await validateNewUser(email);
   
@@ -35,12 +35,9 @@ const registerFromAdmin = async (reqBody) => {
     email,
     role: reqBody.tipo,
   });
-  
-
-  return;
 };
 
 module.exports = {
   register,
-  registerFromAdmin
+  registerFromAdmin,
 };

@@ -5,7 +5,7 @@ const { registerRoute } = require('../Routes/Register.Route');
 const productsRoute = require('../Routes/Products.Route');
 const { userRoute } = require('../Routes/User.Route');
 const { salesRoute } = require('../Routes/Sales.Route');
-const { adminRoute } = require('../Routes/Admin.Route')
+const { adminRoute } = require('../Routes/Admin.Route');
 
 const app = express();
 app.use(express.json());

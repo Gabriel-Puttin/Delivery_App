@@ -4,7 +4,7 @@ const { User } = require('../database/models');
 const getAll = async () => {
   const sellers = await User.findAll({ 
     where: { role: {
-      [Op.not]: 'administrator'
+      [Op.not]: 'administrator',
     } }, 
     attributes: { exclude: ['password'] } });
   return sellers;
@@ -17,9 +17,7 @@ const getSellers = async () => {
   return sellers;
 };
 
-const remove = async (id) => {
-  return User.destroy({ where: { id } });
-};
+const remove = async (id) => User.destroy({ where: { id } });
 
 module.exports = {
   getSellers,

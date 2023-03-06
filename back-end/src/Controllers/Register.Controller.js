@@ -12,7 +12,7 @@ const register = async (req, res, next) => {
 const registerFromAdmin = async (req, res, next) => {
   try {
     await registerService.registerFromAdmin(req.body);
-    res.sendStatus(201)
+    res.sendStatus(201);
   } catch (error) {
     next(error);
   }

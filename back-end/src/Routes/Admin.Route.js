@@ -4,7 +4,7 @@ const validateToken = require('../middlewares/validateToken');
 
 const adminRoute = Router();
 
-adminRoute.post('/manage',validateToken, registerController.registerFromAdmin);
+adminRoute.post('/manage', validateToken, registerController.registerFromAdmin);
 
 module.exports = {
   adminRoute,
