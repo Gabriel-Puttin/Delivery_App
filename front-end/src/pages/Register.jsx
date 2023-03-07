@@ -6,8 +6,6 @@ import { requestPost } from '../services/requests';
 export default function Register() {
   const { login } = useContext(DeliveryAppContext);
 
-  const navigate = useNavigate();
-
   const [registerForm, setRegisterForm] = useState({
     name: '',
     email: '',
@@ -15,6 +13,8 @@ export default function Register() {
   });
 
   const [failedRegister, setFailedRegister] = useState(false);
+
+  const navigate = useNavigate();
 
   const isDisabled = () => {
     const { name, email, password } = registerForm;
@@ -34,7 +34,7 @@ export default function Register() {
   const onRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
-      const user = await requestPost('/register', registerForm);
+      const user = await requestPost('/users/register', registerForm);
       login(user);
       navigate('/customer/products');
     } catch (error) {

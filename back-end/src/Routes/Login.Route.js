@@ -5,6 +5,4 @@ const loginRoute = Router();
 
 loginRoute.post('/', loginController.login);
 
-module.exports = {
-  loginRoute,
-};
+module.exports = { loginRoute };

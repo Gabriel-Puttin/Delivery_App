@@ -1,73 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { requestData, requestDelete, requestPost } from '../../services/requests';
+import React, { useContext, useState } from 'react';
+import DeliveryAppContext from '../../context/DeliveryAppContext';
+import { requestPost } from '../../services/requests';
 
 export default function Form() {
+  const { fetchUsers } = useContext(DeliveryAppContext);
+
   const [userForm, setUserForm] = useState({
-    item: '',
     name: '',
     email: '',
     password: '',
-    excluir: '',
-    isDisable: true,
+    role: 'seller',
   });
 
-  const [users, setUsers] = useState([]);
-  const [isDisabled, setIsDisabled] = useState(true);
   const [failedRegister, setFailedRegister] = useState(false);
 
-  const [tipo, setTipo] = useState('seller');
   const handleChange = (event) => {
     const { target } = event;
     setUserForm({ ...userForm, [target.name]: target.value });
   };
 
-  const fetchUsers = async () => {
-    const userList = await requestData('/users');
-    setUsers(userList);
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
+  const isDisabled = () => {
     const { name, email, password } = userForm;
     const validateLenghtName = 11;
     const validateEmail = /\S+@\S+\.\S+/;
     const validatePassword = 6;
-    const disabled = true;
-    if (password.length >= validatePassword
-      && validateEmail.test(email) && name.length > validateLenghtName) {
-      setIsDisabled(!disabled);
-    } else {
-      setIsDisabled(disabled);
-    }
-  }, [userForm, isDisabled]);
+    return !(password.length >= validatePassword
+      && validateEmail.test(email) && name.length > validateLenghtName);
+  };
 
   const onRegisterSubmit = async (event) => {
     event.preventDefault();
-    const { name, password, email } = userForm;
-    const userInfo = { name, password, email, tipo };
     try {
-      await requestPost('/admin/manage', userInfo);
+      await requestPost('/users/admin/register', userForm);
       return fetchUsers();
     } catch (error) {
       setFailedRegister(true);
     }
   };
 
-  const onRemoveBtnClick = async (userId) => {
-    await requestDelete(`/users/${userId}`);
-    return fetchUsers();
-  };
-
   return (
     <section>
-
       <form onSubmit={ onRegisterSubmit }>
         <label htmlFor="name">
-          name
+          Nome
           <input
+            id="name"
             value={ userForm.name }
             data-testid="admin_manage__input-name"
             name="name"
@@ -78,6 +55,7 @@ export default function Form() {
         Email
         <label htmlFor="email">
           <input
+            id="email"
             value={ userForm.email }
             name="email"
             data-testid="admin_manage__input-email"
@@ -88,6 +66,7 @@ export default function Form() {
         Senha
         <label htmlFor="password">
           <input
+            id="password"
             value={ userForm.password }
             name="password"
             data-testid="admin_manage__input-password"
@@ -95,14 +74,13 @@ export default function Form() {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="select">
+        <label htmlFor="role-select">
           Tipo
           <select
-            name="tipo"
-            value={ tipo }
-            onChange={ (e) => {
-              setTipo(e.target.value);
-            } }
+            id="role-select"
+            name="role"
+            value={ userForm.role }
+            onChange={ handleChange }
             data-testid="admin_manage__select-role"
           >
             <option value="customer">Cliente</option>
@@ -112,52 +90,20 @@ export default function Form() {
         <button
           data-testid="admin_manage__button-register"
           type="submit"
-          disabled={ isDisabled }
+          disabled={ isDisabled() }
         >
           CADASTRAR
-
         </button>
       </form>
       {
-        (failedRegister)
-          ? (
-            <span
-              data-testid="admin_manage__element-invalid-register"
-            >
-              Mensagem de erro
-            </span>
-          )
-          : null
+        failedRegister && (
+          <span
+            data-testid="admin_manage__element-invalid-register"
+          >
+            Mensagem de erro
+          </span>
+        )
       }
-      <table>
-
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={ `user-${index}` }>
-              <td data-testid={ `admin_manage__element-user-table-item-number-${index}` }>
-                {index + 1}
-              </td>
-              <td data-testid={ `admin_manage__element-user-table-name-${index}` }>
-                {user.name}
-              </td>
-              <td data-testid={ `admin_manage__element-user-table-email-${index}` }>
-                {user.email}
-              </td>
-              <td data-testid={ `admin_manage__element-user-table-role-${index}` }>
-                {user.role}
-              </td>
-              <td data-testid={ `admin_manage__element-user-table-remove-${index}` }>
-                <button
-                  type="button"
-                  onClick={ async () => onRemoveBtnClick(user.id) }
-                >
-                  Excluir
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </section>
   );
 }

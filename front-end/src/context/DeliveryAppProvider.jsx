@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DeliveryAppContext from './DeliveryAppContext';
-import { setToken } from '../services/requests';
+import { requestData, setToken } from '../services/requests';
 
 function DeliveryAppProvider({ children }) {
   const [user, setUser] = useState();
+  const [users, setUsers] = useState([]);
 
   const login = useCallback((newUser = undefined) => {
     console.log('login');
@@ -21,6 +22,12 @@ function DeliveryAppProvider({ children }) {
     setUser();
   }, []);
 
+  const fetchUsers = useCallback(async () => {
+    console.log('fetchUsers');
+    const userList = await requestData('/users');
+    setUsers(userList);
+  }, []);
+
   useEffect(() => {
     console.log('Context');
     login();
@@ -30,7 +37,9 @@ function DeliveryAppProvider({ children }) {
     user,
     login,
     logout,
-  }), [user, login, logout]);
+    users,
+    fetchUsers,
+  }), [user, login, logout, users, fetchUsers]);
 
   return (
     <DeliveryAppContext.Provider value={ contextValue }>
