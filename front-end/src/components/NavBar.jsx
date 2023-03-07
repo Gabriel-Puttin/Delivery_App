@@ -48,7 +48,7 @@ function NavBar() {
             type="button"
             onClick={ handleLogout }
           >
-            SAIR
+            Sair
           </button>
         </nav>
       )}
