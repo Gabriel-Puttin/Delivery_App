@@ -1,68 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestPost, setToken } from '../services/requests';
-
-const adminHome = '/admin/manage';
-const sellerHome = '/seller/orders';
-const customerHome = '/customer/products';
+import DeliveryAppContext from '../context/DeliveryAppContext';
+import { requestPost } from '../services/requests';
 
 export default function Login() {
-  const navigate = useNavigate();
+  const { user, login } = useContext(DeliveryAppContext);
 
-  const [login, setLogin] = useState({
+  const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
   });
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [failedLogin, setFailedLogin] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
     if (!user) return;
 
     const { role } = user;
-    if (role === 'administrator') navigate(adminHome);
-    if (role === 'seller') navigate(sellerHome);
-    if (role === 'customer') navigate(customerHome);
-  }, [navigate]);
+    if (role === 'administrator') navigate('/admin/manage');
+    if (role === 'seller') navigate('/seller/orders');
+    if (role === 'customer') navigate('/customer/products');
+  }, [user, navigate]);
 
-  useEffect(() => {
-    const { email, password } = login;
+  const isDisabled = () => {
+    const { email, password } = loginForm;
     const validateEmail = /\S+@\S+\.\S+/;
     const validatePassword = 6;
-    const disabled = true;
-    if (password.length >= validatePassword && validateEmail.test(email)) {
-      setIsDisabled(!disabled);
-    } else {
-      setIsDisabled(disabled);
-    }
-  }, [login, isDisabled]);
+    return !(password.length >= validatePassword && validateEmail.test(email));
+  };
 
   const handleChange = (event) => {
     const { target } = event;
-    setLogin({ ...login, [target.name]: target.value });
+    setLoginForm({ ...loginForm, [target.name]: target.value });
   };
 
   const onLoginSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const user = await requestPost('/login', login);
-      setToken(user.token);
-      localStorage.setItem('user', JSON.stringify(user));
-
-      const { role } = user;
-      if (role === 'administrator') navigate(adminHome);
-      if (role === 'seller') navigate(sellerHome);
-      if (role === 'customer') navigate(customerHome);
+      const userInfo = await requestPost('/login', loginForm);
+      login(userInfo);
     } catch (error) {
       setFailedLogin(true);
     }
-  };
-
-  const onRegisterBtnClick = () => {
-    navigate('/register');
   };
 
   return (
@@ -74,7 +55,7 @@ export default function Login() {
           placeholder="Email"
           name="email"
           onChange={ handleChange }
-          value={ login.email }
+          value={ loginForm.email }
         />
         <input
           data-testid="common_login__input-password"
@@ -82,33 +63,31 @@ export default function Login() {
           placeholder="Password"
           name="password"
           onChange={ handleChange }
-          value={ login.password }
+          value={ loginForm.password }
         />
         <button
           data-testid="common_login__button-login"
           type="submit"
-          disabled={ isDisabled }
+          disabled={ isDisabled() }
         >
           LOGIN
         </button>
         <button
           data-testid="common_login__button-register"
           type="button"
-          onClick={ onRegisterBtnClick }
+          onClick={ () => navigate('/register') }
         >
           Ainda não tenho conta
         </button>
       </form>
       {
-        (failedLogin)
-          ? (
-            <span
-              data-testid="common_login__element-invalid-email"
-            >
-              Mensagem de erro
-            </span>
-          )
-          : null
+        failedLogin && (
+          <span
+            data-testid="common_login__element-invalid-email"
+          >
+            Mensagem de erro
+          </span>
+        )
       }
     </section>
   );
