@@ -44,31 +44,44 @@ export default function Register() {
 
   return (
     <section>
+      <h2>Cadastro</h2>
       <form onSubmit={ onRegisterSubmit }>
-        <input
-          data-testid="common_register__input-name"
-          type="text"
-          placeholder="Nome"
-          name="name"
-          onChange={ handleChange }
-          value={ registerForm.name }
-        />
-        <input
-          data-testid="common_register__input-email"
-          type="email"
-          placeholder="Email"
-          name="email"
-          onChange={ handleChange }
-          value={ registerForm.email }
-        />
-        <input
-          data-testid="common_register__input-password"
-          type="password"
-          placeholder="Password"
-          name="password"
-          onChange={ handleChange }
-          value={ registerForm.password }
-        />
+        <label htmlFor="input-name">
+          Nome
+          <input
+            type="text"
+            name="name"
+            id="input-name"
+            data-testid="common_register__input-name"
+            placeholder="Seu nome"
+            value={ registerForm.name }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-email">
+          Email
+          <input
+            type="email"
+            name="email"
+            id="input-email"
+            data-testid="common_register__input-email"
+            placeholder="seu-email@site.com"
+            value={ registerForm.email }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Senha
+          <input
+            type="password"
+            name="password"
+            id="input-password"
+            data-testid="common_register__input-password"
+            placeholder="********"
+            value={ registerForm.password }
+            onChange={ handleChange }
+          />
+        </label>
         <button
           data-testid="common_register__button-register"
           type="submit"
@@ -82,7 +95,7 @@ export default function Register() {
           <span
             data-testid="common_register__element-invalid_register"
           >
-            Mensagem de erro
+            E-mail já cadastrado
           </span>
         )
       }

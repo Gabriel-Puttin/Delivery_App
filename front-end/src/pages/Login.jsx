@@ -51,13 +51,13 @@ export default function Login() {
       <h2>Delivery App</h2>
       <form onSubmit={ onLoginSubmit }>
         <label htmlFor="input-email">
-          Nome
+          Login
           <input
             type="email"
             name="email"
             id="input-email"
             data-testid="common_login__input-email"
-            placeholder="Email"
+            placeholder="seu-email@site.com"
             value={ loginForm.email }
             onChange={ handleChange }
           />
@@ -69,7 +69,7 @@ export default function Login() {
             name="password"
             id="input-password"
             data-testid="common_login__input-password"
-            placeholder="Password"
+            placeholder="********"
             value={ loginForm.password }
             onChange={ handleChange }
           />
