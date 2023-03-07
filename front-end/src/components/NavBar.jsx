@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../services/requests';
+import DeliveryAppContext from '../context/DeliveryAppContext';
 
 function NavBar() {
+  const { user, logout } = useContext(DeliveryAppContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('user'));
-    setUser(userInfo);
-    setToken(userInfo.token);
-  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    logout();
     navigate('/login');
   };
 
@@ -21,6 +15,7 @@ function NavBar() {
     const { role } = user;
     if (role === 'seller') navigate('/seller/orders');
     if (role === 'customer') navigate('/customer/orders');
+    if (role === 'administrator') navigate('/admin/manage');
   };
 
   return (
@@ -41,7 +36,9 @@ function NavBar() {
             data-testid="customer_products__element-navbar-link-orders"
             onClick={ onOrdersBtnClick }
           >
-            {user.role === 'customer' ? 'MEUS PEDIDOS' : 'PEDIDOS'}
+            {user.role === 'customer' && 'MEUS PEDIDOS'}
+            {user.role === 'seller' && 'PEDIDOS'}
+            {user.role === 'administrator' && 'GERENCIAR USUÁRIOS'}
           </button>
           <h3 data-testid="customer_products__element-navbar-user-full-name">
             {user.name}
@@ -54,7 +51,6 @@ function NavBar() {
             SAIR
           </button>
         </nav>
-
       )}
     </section>
   );
