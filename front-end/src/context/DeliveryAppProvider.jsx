@@ -11,7 +11,6 @@ function DeliveryAppProvider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const login = useCallback((newUser = undefined) => {
-    console.log('login');
     if (newUser) localStorage.setItem('user', JSON.stringify(newUser));
     const userInfo = JSON.parse(localStorage.getItem('user'));
     if (!userInfo) return;
@@ -20,19 +19,16 @@ function DeliveryAppProvider({ children }) {
   }, []);
 
   const logout = useCallback(() => {
-    console.log('logout');
     localStorage.removeItem('user');
     setUser();
   }, []);
 
   const fetchUserList = useCallback(async () => {
-    console.log('fetchUserList');
     const users = await requestData('/users');
     setUserList(users);
   }, []);
 
   const fetchOrderDetails = useCallback(async (id) => {
-    console.log('fetchOrderDetails');
     const order = await requestData(`/sales/${id}`);
 
     const { products, ...orderData } = order;
