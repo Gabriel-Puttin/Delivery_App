@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
-import Form from '../components/AdminPageComponents/Form';
-import NavLink from '../components/AdminPageComponents/NavLink';
-import { setToken } from '../services/requests';
+import React from 'react';
+import AdminPageForm from '../components/AdminPage/AdminPageForm';
+import AdminPageTable from '../components/AdminPage/AdminPageTable';
+import NavBar from '../components/NavBar';
 
 export default function AdminPage() {
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('user'));
-    setToken(userInfo.token);
-  }, []);
   return (
     <div>
-      <NavLink />
-      <Form />
+      <NavBar />
+      <AdminPageForm />
+      <AdminPageTable />
     </div>
   );
 }

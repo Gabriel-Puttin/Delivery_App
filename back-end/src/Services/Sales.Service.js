@@ -24,7 +24,7 @@ const getAll = async (user) => {
 };
 
 const getById = async (id) => {
-  const sales = await Sale.findByPk(id, {
+  const order = await Sale.findByPk(id, {
     // include: { all: true },
     include: [
       { model: User, as: 'seller', attributes: ['name'] },
@@ -33,7 +33,7 @@ const getById = async (id) => {
     attributes: { exclude: ['userId', 'sellerId'] },
   });
 
-  return sales;
+  return order;
 };
 
 const update = async (id, body) => {

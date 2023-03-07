@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestPost, setToken } from '../services/requests';
+import DeliveryAppContext from '../context/DeliveryAppContext';
+import { requestPost } from '../services/requests';
 
 export default function Register() {
-  const navigate = useNavigate();
+  const { login } = useContext(DeliveryAppContext);
 
   const [registerForm, setRegisterForm] = useState({
     name: '',
@@ -11,22 +12,19 @@ export default function Register() {
     password: '',
   });
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [failedRegister, setFailedRegister] = useState(false);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+
+  const isDisabled = () => {
     const { name, email, password } = registerForm;
     const validateEmail = /\S+@\S+\.\S+/;
     const minNameLength = 12;
     const minPasswordLength = 6;
-    if (name.length >= minNameLength
+    return !(name.length >= minNameLength
        && password.length >= minPasswordLength
-       && validateEmail.test(email)) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [registerForm, isDisabled]);
+       && validateEmail.test(email));
+  };
 
   const handleChange = (event) => {
     const { target } = event;
@@ -36,9 +34,8 @@ export default function Register() {
   const onRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
-      const user = await requestPost('/register', registerForm);
-      setToken(user.token);
-      localStorage.setItem('user', JSON.stringify(user));
+      const user = await requestPost('/users/register', registerForm);
+      login(user);
       navigate('/customer/products');
     } catch (error) {
       setFailedRegister(true);
@@ -47,51 +44,61 @@ export default function Register() {
 
   return (
     <section>
+      <h2>Cadastro</h2>
       <form onSubmit={ onRegisterSubmit }>
-        <input
-          data-testid="common_register__input-name"
-          type="text"
-          placeholder="Nome"
-          name="name"
-          onChange={ handleChange }
-          value={ registerForm.name }
-        />
-        <input
-          data-testid="common_register__input-email"
-          type="email"
-          placeholder="Email"
-          name="email"
-          onChange={ handleChange }
-          value={ registerForm.email }
-        />
-        <input
-          data-testid="common_register__input-password"
-          type="password"
-          placeholder="Password"
-          name="password"
-          onChange={ handleChange }
-          value={ registerForm.password }
-        />
+        <label htmlFor="input-name">
+          Nome
+          <input
+            type="text"
+            name="name"
+            id="input-name"
+            data-testid="common_register__input-name"
+            placeholder="Seu nome"
+            value={ registerForm.name }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-email">
+          Email
+          <input
+            type="email"
+            name="email"
+            id="input-email"
+            data-testid="common_register__input-email"
+            placeholder="seu-email@site.com"
+            value={ registerForm.email }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Senha
+          <input
+            type="password"
+            name="password"
+            id="input-password"
+            data-testid="common_register__input-password"
+            placeholder="********"
+            value={ registerForm.password }
+            onChange={ handleChange }
+          />
+        </label>
         <button
           data-testid="common_register__button-register"
           type="submit"
-          disabled={ isDisabled }
+          disabled={ isDisabled() }
         >
           CADASTRAR
         </button>
       </form>
       {
-        (failedRegister)
-          ? (
-            <span
-              data-testid="common_register__element-invalid_register"
-            >
-              Mensagem de erro
-            </span>
-          )
-          : null
+        failedRegister && (
+          <span
+            data-testid="common_register__element-invalid_register"
+          >
+            E-mail já cadastrado
+          </span>
+        )
       }
-
     </section>
   );
 }

@@ -18,6 +18,24 @@ const getSellers = async (_req, res, next) => {
   }
 };
 
+const register = async (req, res, next) => {
+  try {
+    const user = await userService.register(req.body);
+    res.status(201).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const registerAsAdmin = async (req, res, next) => {
+  try {
+    await userService.registerAsAdmin(req.body);
+    res.sendStatus(201);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const remove = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -31,5 +49,7 @@ const remove = async (req, res, next) => {
 module.exports = {
   getSellers,
   getAll,
+  register,
+  registerAsAdmin,
   remove,
 };
