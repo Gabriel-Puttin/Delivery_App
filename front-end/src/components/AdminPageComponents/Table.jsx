@@ -3,21 +3,21 @@ import DeliveryAppContext from '../../context/DeliveryAppContext';
 import { requestDelete } from '../../services/requests';
 
 export default function Table() {
-  const { users, fetchUsers } = useContext(DeliveryAppContext);
+  const { userList, fetchUserList } = useContext(DeliveryAppContext);
 
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchUserList();
+  }, [fetchUserList]);
 
   const onRemoveBtnClick = async (userId) => {
     await requestDelete(`/users/${userId}`);
-    return fetchUsers();
+    return fetchUserList();
   };
 
   return (
     <table>
       <tbody>
-        {users.map((user, index) => (
+        {userList.map((user, index) => (
           <tr key={ `user-${index}` }>
             <td data-testid={ `admin_manage__element-user-table-item-number-${index}` }>
               {index + 1}

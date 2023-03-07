@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
-import { requestData, requestUpdate } from '../services/requests';
+import { requestUpdate } from '../services/requests';
 import NavBar from '../components/NavBar';
+import DeliveryAppContext from '../context/DeliveryAppContext';
 
 const orderId = 'customer_order_details__element-order-details-label-order-id';
 const sellerId = 'customer_order_details__element-order-details-label-seller-name';
@@ -18,66 +19,56 @@ const subTotalId = 'customer_order_details__element-order-table-sub-total';
 const totalId = 'customer_order_details__element-order-total-price';
 
 function OrdersDetails() {
-  const [order, setOrder] = useState();
-  const [products, setProducts] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const {
+    user,
+    orderInfo,
+    orderItems,
+    totalPrice,
+    fetchOrderDetails } = useContext(DeliveryAppContext);
+
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const orderDetails = await requestData(`/sales/${id}`);
-      setOrder(orderDetails);
-      const formatedProducts = orderDetails.products.map((p) => {
-        const { SalesProduct, ...product } = p;
-        const { quantity } = SalesProduct;
-        return { ...product, quantity };
-      });
-      setProducts(formatedProducts);
-    };
-    fetchOrders();
-  }, [id]);
+    if (!user) return;
+    fetchOrderDetails(id);
+  }, [user, fetchOrderDetails, id]);
 
-  useEffect(() => {
-    const total = products.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
-    setTotalPrice(total);
-  }, [products]);
-
-  const handleClick = async (status) => {
+  const handleStatusUpdate = async (status) => {
     await requestUpdate(`/sales/${id}`, { status });
-    setOrder({ ...order, status });
+    await fetchOrderDetails(id);
   };
 
   return (
     <section>
       <NavBar />
-      { order && (
+      { orderInfo && (
         <div>
           <p
             data-testid={ orderId }
           >
-            { order.id }
+            { orderInfo.id }
           </p>
           <p
             data-testid={ sellerId }
           >
-            { order.seller.name }
+            { orderInfo.seller.name }
 
           </p>
           <p
             data-testid={ dateId }
           >
-            { moment(order.saleDate).format('DD/MM/YYYY') }
+            { moment(orderInfo.saleDate).format('DD/MM/YYYY') }
           </p>
           <p
-            data-testid={ `${statusId}${order.id}` }
+            data-testid={ `${statusId}${orderInfo.id}` }
           >
-            { order.status }
+            { orderInfo.status }
           </p>
           <button
             type="button"
             data-testid={ checkDeliveryId }
-            disabled={ order.status !== 'Em Trânsito' }
-            onClick={ async () => handleClick('Entregue') }
+            disabled={ orderInfo.status !== 'Em Trânsito' }
+            onClick={ async () => handleStatusUpdate('Entregue') }
           >
             Marcar como entregue
           </button>
@@ -87,7 +78,7 @@ function OrdersDetails() {
       <hr />
       <div>
         {
-          products.map((product, index) => (
+          orderItems.map((item, index) => (
             <div key={ index }>
               <p
                 data-testid={ `${itemNumberId}-${index}` }
@@ -97,23 +88,23 @@ function OrdersDetails() {
               <p
                 data-testid={ `${nameId}-${index}` }
               >
-                {product.name}
+                {item.name}
               </p>
               <p
                 data-testid={ `${quantityId}-${index}` }
               >
-                {product.quantity}
+                {item.quantity}
               </p>
               <p
                 data-testid={ `${unitPriceId}-${index}` }
               >
-                {`${product.price.replace('.', ',')}`}
+                {`${item.price.replace('.', ',')}`}
               </p>
               <p
                 data-testid={ `${subTotalId}-${index}` }
               >
                 {
-                  (product.quantity * product.price)
+                  (item.quantity * item.price)
                     .toFixed(2)
                     .toString()
                     .replace('.', ',')
@@ -127,7 +118,6 @@ function OrdersDetails() {
         >
           { totalPrice.toFixed(2).toString().replace('.', ',') }
         </p>
-
       </div>
     </section>
   );

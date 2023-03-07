@@ -3,7 +3,7 @@ import DeliveryAppContext from '../../context/DeliveryAppContext';
 import { requestPost } from '../../services/requests';
 
 export default function Form() {
-  const { fetchUsers } = useContext(DeliveryAppContext);
+  const { fetchUserList } = useContext(DeliveryAppContext);
 
   const [userForm, setUserForm] = useState({
     name: '',
@@ -32,7 +32,7 @@ export default function Form() {
     event.preventDefault();
     try {
       await requestPost('/users/admin/register', userForm);
-      return fetchUsers();
+      return fetchUserList();
     } catch (error) {
       setFailedRegister(true);
     }

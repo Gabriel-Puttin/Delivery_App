@@ -5,7 +5,10 @@ import { requestData, setToken } from '../services/requests';
 
 function DeliveryAppProvider({ children }) {
   const [user, setUser] = useState();
-  const [users, setUsers] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [orderInfo, setOrderInfo] = useState();
+  const [orderItems, setOrderItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const login = useCallback((newUser = undefined) => {
     console.log('login');
@@ -22,14 +25,35 @@ function DeliveryAppProvider({ children }) {
     setUser();
   }, []);
 
-  const fetchUsers = useCallback(async () => {
-    console.log('fetchUsers');
-    const userList = await requestData('/users');
-    setUsers(userList);
+  const fetchUserList = useCallback(async () => {
+    console.log('fetchUserList');
+    const users = await requestData('/users');
+    setUserList(users);
+  }, []);
+
+  const fetchOrderDetails = useCallback(async (id) => {
+    console.log('fetchOrderDetails');
+    const order = await requestData(`/sales/${id}`);
+
+    const { products, ...orderData } = order;
+
+    const formatedItems = products.map((p) => {
+      const { SalesProduct, ...product } = p;
+      const { quantity } = SalesProduct;
+      return { ...product, quantity };
+    });
+
+    setOrderInfo(orderData);
+    setOrderItems(formatedItems);
   }, []);
 
   useEffect(() => {
-    console.log('Context');
+    if (!orderItems) return;
+    const total = orderItems.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
+    setTotalPrice(total);
+  }, [orderItems]);
+
+  useEffect(() => {
     login();
   }, [login]);
 
@@ -37,9 +61,16 @@ function DeliveryAppProvider({ children }) {
     user,
     login,
     logout,
-    users,
-    fetchUsers,
-  }), [user, login, logout, users, fetchUsers]);
+    userList,
+    fetchUserList,
+    orderInfo,
+    fetchOrderDetails,
+    orderItems,
+    totalPrice,
+  }), [
+    user, login, logout,
+    userList, fetchUserList,
+    orderInfo, fetchOrderDetails, orderItems, totalPrice]);
 
   return (
     <DeliveryAppContext.Provider value={ contextValue }>
