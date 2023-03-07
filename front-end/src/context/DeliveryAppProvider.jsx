@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DeliveryAppContext from './DeliveryAppContext';
 import { requestData, setToken } from '../services/requests';
@@ -9,6 +9,7 @@ function DeliveryAppProvider({ children }) {
   const [orderInfo, setOrderInfo] = useState();
   const [orderItems, setOrderItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const mountedRef = useRef(true);
 
   const login = useCallback((newUser = undefined) => {
     console.log('login');
@@ -28,6 +29,7 @@ function DeliveryAppProvider({ children }) {
   const fetchUserList = useCallback(async () => {
     console.log('fetchUserList');
     const users = await requestData('/users');
+    if (!mountedRef.current) return;
     setUserList(users);
   }, []);
 
@@ -55,6 +57,9 @@ function DeliveryAppProvider({ children }) {
 
   useEffect(() => {
     login();
+    return () => {
+      mountedRef.current = false;
+    };
   }, [login]);
 
   const contextValue = useMemo(() => ({
