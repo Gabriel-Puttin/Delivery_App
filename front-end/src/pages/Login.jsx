@@ -48,23 +48,32 @@ export default function Login() {
 
   return (
     <section>
+      <h2>Delivery App</h2>
       <form onSubmit={ onLoginSubmit }>
-        <input
-          data-testid="common_login__input-email"
-          type="email"
-          placeholder="Email"
-          name="email"
-          onChange={ handleChange }
-          value={ loginForm.email }
-        />
-        <input
-          data-testid="common_login__input-password"
-          type="password"
-          placeholder="Password"
-          name="password"
-          onChange={ handleChange }
-          value={ loginForm.password }
-        />
+        <label htmlFor="input-email">
+          Nome
+          <input
+            type="email"
+            name="email"
+            id="input-email"
+            data-testid="common_login__input-email"
+            placeholder="Email"
+            value={ loginForm.email }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Senha
+          <input
+            type="password"
+            name="password"
+            id="input-password"
+            data-testid="common_login__input-password"
+            placeholder="Password"
+            value={ loginForm.password }
+            onChange={ handleChange }
+          />
+        </label>
         <button
           data-testid="common_login__button-login"
           type="submit"
@@ -85,7 +94,7 @@ export default function Login() {
           <span
             data-testid="common_login__element-invalid-email"
           >
-            Mensagem de erro
+            Usuário inválido
           </span>
         )
       }

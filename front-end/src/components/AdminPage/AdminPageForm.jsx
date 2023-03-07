@@ -40,6 +40,7 @@ export default function AdminPageForm() {
 
   return (
     <section>
+      <h2>Cadastrar novo usuário</h2>
       <form onSubmit={ onRegisterSubmit }>
         <label htmlFor="input-name">
           Nome
