@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import DeliveryAppContext from '../../context/DeliveryAppContext';
 import { requestDelete } from '../../services/requests';
 
-export default function Table() {
+export default function AdminPageTable() {
   const { userList, fetchUserList } = useContext(DeliveryAppContext);
 
   useEffect(() => {
@@ -16,6 +16,15 @@ export default function Table() {
 
   return (
     <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Tipo</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
       <tbody>
         {userList.map((user, index) => (
           <tr key={ `user-${index}` }>

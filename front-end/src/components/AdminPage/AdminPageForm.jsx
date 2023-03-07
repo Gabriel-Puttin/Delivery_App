@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import DeliveryAppContext from '../../context/DeliveryAppContext';
 import { requestPost } from '../../services/requests';
 
-export default function Form() {
+export default function AdminPageForm() {
   const { fetchUserList } = useContext(DeliveryAppContext);
 
   const [userForm, setUserForm] = useState({
@@ -41,55 +41,55 @@ export default function Form() {
   return (
     <section>
       <form onSubmit={ onRegisterSubmit }>
-        <label htmlFor="name">
+        <label htmlFor="input-name">
           Nome
           <input
-            id="name"
-            value={ userForm.name }
-            data-testid="admin_manage__input-name"
-            name="name"
             type="text"
+            name="name"
+            id="input-name"
+            data-testid="admin_manage__input-name"
+            value={ userForm.name }
             onChange={ handleChange }
           />
         </label>
-        Email
-        <label htmlFor="email">
+        <label htmlFor="input-email">
+          Email
           <input
-            id="email"
-            value={ userForm.email }
-            name="email"
-            data-testid="admin_manage__input-email"
             type="email"
+            name="email"
+            id="input-email"
+            data-testid="admin_manage__input-email"
+            value={ userForm.email }
             onChange={ handleChange }
           />
         </label>
-        Senha
-        <label htmlFor="password">
+        <label htmlFor="input-password">
+          Senha
           <input
-            id="password"
-            value={ userForm.password }
-            name="password"
-            data-testid="admin_manage__input-password"
             type="password"
+            name="password"
+            id="input-password"
+            data-testid="admin_manage__input-password"
+            value={ userForm.password }
             onChange={ handleChange }
           />
         </label>
         <label htmlFor="role-select">
           Tipo
           <select
-            id="role-select"
             name="role"
+            id="role-select"
+            data-testid="admin_manage__select-role"
             value={ userForm.role }
             onChange={ handleChange }
-            data-testid="admin_manage__select-role"
           >
             <option value="customer">Cliente</option>
             <option value="seller">Vendedor</option>
           </select>
         </label>
         <button
-          data-testid="admin_manage__button-register"
           type="submit"
+          data-testid="admin_manage__button-register"
           disabled={ isDisabled() }
         >
           CADASTRAR

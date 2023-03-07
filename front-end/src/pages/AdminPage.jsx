@@ -1,14 +1,14 @@
 import React from 'react';
-import Form from '../components/AdminPageComponents/Form';
-import Table from '../components/AdminPageComponents/Table';
+import AdminPageForm from '../components/AdminPage/AdminPageForm';
+import AdminPageTable from '../components/AdminPage/AdminPageTable';
 import NavBar from '../components/NavBar';
 
 export default function AdminPage() {
   return (
     <div>
       <NavBar />
-      <Form />
-      <Table />
+      <AdminPageForm />
+      <AdminPageTable />
     </div>
   );
 }
