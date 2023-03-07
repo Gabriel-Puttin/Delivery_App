@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestPost, setToken } from '../services/requests';
+import DeliveryAppContext from '../context/DeliveryAppContext';
+import { requestPost } from '../services/requests';
 
 export default function Register() {
+  const { login } = useContext(DeliveryAppContext);
+
   const navigate = useNavigate();
 
   const [registerForm, setRegisterForm] = useState({
@@ -11,22 +14,17 @@ export default function Register() {
     password: '',
   });
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [failedRegister, setFailedRegister] = useState(false);
 
-  useEffect(() => {
+  const isDisabled = () => {
     const { name, email, password } = registerForm;
     const validateEmail = /\S+@\S+\.\S+/;
     const minNameLength = 12;
     const minPasswordLength = 6;
-    if (name.length >= minNameLength
+    return !(name.length >= minNameLength
        && password.length >= minPasswordLength
-       && validateEmail.test(email)) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [registerForm, isDisabled]);
+       && validateEmail.test(email));
+  };
 
   const handleChange = (event) => {
     const { target } = event;
@@ -37,8 +35,7 @@ export default function Register() {
     event.preventDefault();
     try {
       const user = await requestPost('/register', registerForm);
-      setToken(user.token);
-      localStorage.setItem('user', JSON.stringify(user));
+      login(user);
       navigate('/customer/products');
     } catch (error) {
       setFailedRegister(true);
@@ -75,23 +72,20 @@ export default function Register() {
         <button
           data-testid="common_register__button-register"
           type="submit"
-          disabled={ isDisabled }
+          disabled={ isDisabled() }
         >
           CADASTRAR
         </button>
       </form>
       {
-        (failedRegister)
-          ? (
-            <span
-              data-testid="common_register__element-invalid_register"
-            >
-              Mensagem de erro
-            </span>
-          )
-          : null
+        failedRegister && (
+          <span
+            data-testid="common_register__element-invalid_register"
+          >
+            Mensagem de erro
+          </span>
+        )
       }
-
     </section>
   );
 }
