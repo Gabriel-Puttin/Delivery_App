@@ -6,22 +6,24 @@ import renderWithRouter from './helpers/renderWithRouter';
 import api from '../../services/requests';
 import { getProductsResponse } from './mocks/products.mock';
 import { getSellersResponse } from './mocks/users.mock';
+import { getSalesResponse } from './mocks/sales.mock';
+import { customer } from './mocks/login.mock';
 
 const productsRoute = '/customer/products';
 const checkoutRoute = '/customer/checkout';
+const ordersRoute = '/customer/orders';
 
 const cartBtnTestId = 'customer_products__button-cart';
 
 describe('testando página Products', () => {
   beforeEach(() => {
-    global.localStorage.clear();
-    api.get = jest.fn()
-      .mockResolvedValueOnce({ data: getProductsResponse })
-      .mockResolvedValueOnce({ data: getSellersResponse });
+    global.localStorage.setItem('user', JSON.stringify(customer));
     cleanup();
   });
 
   it('Testa se adição e remoção de produtos funciona corretamente', async () => {
+    api.get = jest.fn().mockResolvedValue({ data: getProductsResponse });
+
     const { history } = renderWithRouter(<App />, { initialEntries: [productsRoute] });
 
     const itemRemoveBtns = await screen.findAllByTestId(/button-card-rm-item/i);
@@ -54,6 +56,10 @@ describe('testando página Products', () => {
   });
 
   it('Testa se redirecionamento para checkout funciona corretamente', async () => {
+    api.get = jest.fn()
+      .mockResolvedValueOnce({ data: getProductsResponse })
+      .mockResolvedValueOnce({ data: getSellersResponse });
+
     const { history } = renderWithRouter(<App />, { initialEntries: [productsRoute] });
 
     const itemQtyInputs = await screen.findAllByTestId(/input-card-quantity/i);
@@ -67,5 +73,25 @@ describe('testando página Products', () => {
     });
 
     expect(history.location.pathname).toBe(checkoutRoute);
+  });
+
+  it('Testa se o menu de navegação funciona corretamente', async () => {
+    api.get = jest.fn()
+      .mockResolvedValueOnce({ data: getProductsResponse })
+      .mockResolvedValueOnce({ data: getSalesResponse });
+
+    const { history } = renderWithRouter(<App />, { initialEntries: [productsRoute] });
+
+    const ordersBtn = await screen.findByRole('button', {
+      name: /MEUS PEDIDOS/i,
+    });
+
+    userEvent.click(ordersBtn);
+
+    await waitFor(() => {
+      expect(api.get).toHaveBeenCalled();
+    });
+
+    expect(history.location.pathname).toBe(ordersRoute);
   });
 });
