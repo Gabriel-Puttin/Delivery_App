@@ -44,6 +44,13 @@ const newClient = {
   "password": "novocliente123"
 };
 
+const newClientAdmin = {
+  name: "Novo Cliente",
+  email: "novocliente@email.com",
+  password: "novocliente123",
+  role: 'seller'
+};
+
 const registerResponse = {
   "name": "Novo Cliente",
   "email": "novocliente@email.com",
@@ -58,5 +65,6 @@ module.exports = {
   allClients,
   allSellers,
   newClient,
+  newClientAdmin,
   registerResponse,
 };

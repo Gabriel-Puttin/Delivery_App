@@ -1,16 +1,23 @@
-const payload = {
+const customerPayload = {
   name: 'Fulana Pereira',
   email: 'fulana@deliveryapp.com',
   role: 'customer',
 };
 
-const payload2 = {
+const sellerPayload = {
   name: 'kakakaka',
   email: 'kakaka@deliveryapp.com',
   role: 'seller',
 };
 
+const adminPayload = {
+  name: 'kakakaka',
+  email: 'kakaka@deliveryapp.com',
+  role: 'administrator',
+};
+
 module.exports = {
-  payload,
-  payload2,
+  customerPayload,
+  sellerPayload,
+  adminPayload,
 };
