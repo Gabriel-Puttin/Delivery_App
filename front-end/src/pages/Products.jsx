@@ -45,7 +45,7 @@ function Products() {
       if (item.id === Number(id)) {
         return {
           ...item,
-          quantity: Number(value) < 0 ? 0 : Number(value),
+          quantity: Number(value),
         };
       }
       return item;
