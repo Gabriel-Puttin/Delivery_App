@@ -1,3 +1,10 @@
+export const validUserForm = {
+  name: 'A Very Valid Name',
+  email: 'valid@mail.com',
+  password: 'validpassword',
+  role: 'customer',
+};
+
 export const getUsersResponse = [
   {
     id: 2,

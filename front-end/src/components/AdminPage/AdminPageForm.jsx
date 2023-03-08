@@ -101,7 +101,7 @@ export default function AdminPageForm() {
           <span
             data-testid="admin_manage__element-invalid-register"
           >
-            Mensagem de erro
+            E-mail já cadastrado
           </span>
         )
       }

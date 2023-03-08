@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, cleanup, screen, waitFor } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../../App';
 
@@ -14,15 +14,13 @@ import { getSalesResponse } from './mocks/sales.mock';
 import { getProductsResponse } from './mocks/products.mock';
 import api from '../../services/requests';
 
-// jest.mock('axios');
-
-describe('testando componente Login', () => {
+describe('testando página Login', () => {
   beforeEach(() => {
     global.localStorage.clear();
     cleanup();
   });
 
-  it('Testa se os componente de Login são renderizados', async () => {
+  it('Testa se os componente de Login são renderizados', () => {
     const { history } = renderWithRouter(<App />);
 
     expect(history.location.pathname).toBe('/login');
@@ -111,7 +109,7 @@ describe('testando componente Login', () => {
     expect(history.location.pathname).toBe('/login');
   });
 
-  it('Testa se o botão de registro funciona', async () => {
+  it('Testa se o botão de registro funciona', () => {
     const { history } = renderWithRouter(<App />);
 
     expect(history.location.pathname).toBe('/login');
@@ -130,11 +128,10 @@ describe('testando componente Login', () => {
 
     api.get = jest.fn().mockResolvedValue({ data: getUsersResponse });
 
-    await act(async () => {
-      const { history } = renderWithRouter(<App />);
-      await waitFor(() => {
-        expect(history.location.pathname).toBe('/admin/manage');
-      });
+    const { history } = renderWithRouter(<App />);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/admin/manage');
     });
   });
   it('Testa se é redirecionado corretamente como seller', async () => {
@@ -142,11 +139,10 @@ describe('testando componente Login', () => {
 
     api.get = jest.fn().mockResolvedValue({ data: getSalesResponse });
 
-    await act(async () => {
-      const { history } = renderWithRouter(<App />);
-      await waitFor(() => {
-        expect(history.location.pathname).toBe('/seller/orders');
-      });
+    const { history } = renderWithRouter(<App />);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/seller/orders');
     });
   });
   it('Testa se é redirecionado corretamente como customer', async () => {
@@ -154,11 +150,10 @@ describe('testando componente Login', () => {
 
     api.get = jest.fn().mockResolvedValue({ data: getProductsResponse });
 
-    await act(async () => {
-      const { history } = renderWithRouter(<App />);
-      await waitFor(() => {
-        expect(history.location.pathname).toBe('/customer/products');
-      });
+    const { history } = renderWithRouter(<App />);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/customer/products');
     });
   });
 });
