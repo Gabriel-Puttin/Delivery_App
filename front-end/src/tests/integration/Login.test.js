@@ -44,6 +44,7 @@ describe('testando página Login', () => {
 
   it('Testa se é possível fazer login', async () => {
     api.post = jest.fn().mockResolvedValue({ data: customer });
+    api.get = jest.fn().mockResolvedValue({ data: getProductsResponse });
 
     const { history } = renderWithRouter(<App />);
 
@@ -72,6 +73,7 @@ describe('testando página Login', () => {
 
     await waitFor(() => {
       expect(api.post).toHaveBeenCalled();
+      expect(api.get).toHaveBeenCalled();
     });
 
     expect(history.location.pathname).toBe('/customer/products');
