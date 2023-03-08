@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { requestData } from '../services/requests';
@@ -10,22 +10,16 @@ function Products() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const mountedRef = useRef(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const productsData = await requestData('/products');
-      if (!mountedRef.current) return;
       setProducts(productsData.map((product) => ({
         ...product,
         quantity: 0,
       })));
     };
     fetchProducts();
-
-    return () => {
-      mountedRef.current = false;
-    };
   }, []);
 
   useEffect(() => {
@@ -51,7 +45,7 @@ function Products() {
       if (item.id === Number(id)) {
         return {
           ...item,
-          quantity: Number(value) < 0 ? 0 : Number(value),
+          quantity: Number(value),
         };
       }
       return item;

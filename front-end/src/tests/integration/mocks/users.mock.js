@@ -20,4 +20,11 @@ export const getUsersResponse = [
   },
 ];
 
+export const getSellersResponse = [
+  {
+    id: 2,
+    name: 'Fulana Pereira',
+  },
+];
+
 export default getUsersResponse;
