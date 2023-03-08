@@ -1,54 +1,83 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#form-login {
+  box-sizing: border-box;
+  position: absolute;
+  left: 39.06%;
+  right: 38.8%;
+  top: 46.39%;
+  bottom: 12.5%;
+  background: #eaf1ef;
+  border: 1px solid #b1c2be;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 320px;
+  height: 285px;
+}
+
+#btn-login {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
   align-items: center;
-  background: #0fa36b;
-  color: #464646;
+  text-align: center;
+  line-height: 50%;
+
+  width: 250px;
+  height: 30px;
+  border-radius: 10px;
+  color: #f2fffc;
+  background: #036b52;
+  margin-left: 35px;
+}
+
+#btn-outline-green {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 50%;
+  align-items: center;
+  text-align: center;
+
+  color: #036b52;
+  background-color: white !important;
+  box-sizing: border-box;
+
+  border: 2px solid #036b52;
+  border-radius: 10px;
+  width: 250px;
+  height: 30px;
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+#main-login {
+  display: flex;
+}
+
+#buttons {
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
-  justify-content: center;
-  width: 100%;
 }
 
-.App > .logo {
-  animation: shake 1.5s infinite ease;
-  color: aliceblue;
-  font-family: Montserrat , sans-serif;
-  font-size: 3em;
-  font-weight: 900;
+.input_form_login {
+  width: 250px;
+  height: 40px;
+  margin: auto;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
+.label_form_login {
+  margin-left: 43px;
+  margin-top: 8px;
 }
 
-@keyframes shake {
-
-  0% {
-    transform: rotate(5deg);
-  }
-
-  50% {
-    transform: rotate(-5deg);
-  }
-
-  100% {
-    transform: rotate(5deg);
-  }
-}
-
-@keyframes clink {
-
-  0% {
-    transform: rotate(-10deg);
-  }
-
-  50% {
-    transform: rotate(20deg);
-  }
-
-  100% {
-    transform: rotate(-10deg);
-  }
+#spam_text {
+  position: absolute;
+  top: 92%;
+  margin-left: 100px;
 }

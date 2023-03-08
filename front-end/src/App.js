@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import './App.css';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Products from './pages/Products';
@@ -11,6 +10,7 @@ import SellerOrders from './pages/SellerOrders';
 import SellerOrdersDetails from './pages/SellerOrdersDetails';
 import AdminPage from './pages/AdminPage';
 import DeliveryAppProvider from './context/DeliveryAppProvider';
+import './App.css';
 
 function App() {
   return (
