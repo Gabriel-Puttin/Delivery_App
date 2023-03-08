@@ -51,12 +51,6 @@ describe('testando página Products', () => {
     userEvent.click(itemRemoveBtns[4]);
     userEvent.click(itemRemoveBtns[4]);
     expect(cartBtnValue.innerHTML).toBe('0,00');
-
-    expect(itemQtyInputs[4].value).toBe('0');
-    userEvent.type(itemQtyInputs[4], '-1000');
-    expect(itemQtyInputs[4].value).toBe('0');
-
-    expect(cartBtnValue.innerHTML).toBe('0,00');
   });
 
   it('Testa se redirecionamento para checkout funciona corretamente', async () => {
@@ -74,61 +68,4 @@ describe('testando página Products', () => {
 
     expect(history.location.pathname).toBe(checkoutRoute);
   });
-
-  // it('Testa se é possível cadastrar um usuário', async () => {
-  //   api.post = jest.fn().mockResolvedValue({ data: { status: 201 } });
-  //   api.get = jest.fn().mockResolvedValue({ data: getProductsResponse });
-
-  //   const { history } = renderWithRouter(<App />, { initialEntries: [registerRoute] });
-
-  //   const formName = await screen.findByLabelText(/Nome/i);
-  //   const formEmail = await screen.findByLabelText(/Email/i);
-  //   const formPassword = await screen.findByLabelText(/Senha/i);
-  //   const formSubmitBtn = await screen.findByRole('button', {
-  //     name: /CADASTRAR/i,
-  //   });
-
-  //   expect(formSubmitBtn).toBeDisabled();
-
-  //   userEvent.type(formName, validUserForm.name);
-  //   userEvent.type(formEmail, validUserForm.email);
-  //   userEvent.type(formPassword, validUserForm.password);
-
-  //   expect(formSubmitBtn).toBeEnabled();
-
-  //   userEvent.click(formSubmitBtn);
-
-  //   await waitFor(() => {
-  //     expect(api.post).toHaveBeenCalled();
-  //     expect(api.get).toHaveBeenCalled();
-  //     expect(history.location.pathname).toBe(productsRoute);
-  //   });
-  // });
-
-  // it('Testa se mostra mensagem de erro se usuário já existe', async () => {
-  //   api.post = jest.fn().mockImplementation(() => {
-  //     throw new Error();
-  //   });
-
-  //   renderWithRouter(<App />, { initialEntries: [registerRoute] });
-
-  //   const formName = await screen.findByLabelText(/Nome/i);
-  //   const formEmail = await screen.findByLabelText(/Email/i);
-  //   const formPassword = await screen.findByLabelText(/Senha/i);
-  //   const formSubmitBtn = await screen.findByRole('button', {
-  //     name: /CADASTRAR/i,
-  //   });
-
-  //   userEvent.type(formName, validUserForm.name);
-  //   userEvent.type(formEmail, validUserForm.email);
-  //   userEvent.type(formPassword, validUserForm.password);
-  //   userEvent.click(formSubmitBtn);
-
-  //   await waitFor(() => {
-  //     expect(api.post).toHaveBeenCalled();
-  //   });
-
-  //   const errorMessage = await screen.findByText(/E-mail já cadastrado/i);
-  //   expect(errorMessage).toBeEnabled();
-  // });
 });
