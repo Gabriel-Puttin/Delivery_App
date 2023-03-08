@@ -7,8 +7,8 @@ import api from '../../services/requests';
 import { getSalesResponse, getOrderDetailsResponse } from './mocks/sales.mock';
 import { seller } from './mocks/login.mock';
 
-const ordersRoute = '/customer/orders';
-const detailsRoute = '/customer/orders/1';
+const ordersRoute = '/seller/orders';
+const detailsRoute = '/seller/orders/1';
 
 describe('testando páginas Orders', () => {
   beforeEach(() => {

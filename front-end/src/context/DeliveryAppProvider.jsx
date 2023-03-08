@@ -51,7 +51,6 @@ function DeliveryAppProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (!orderItems) return;
     const total = orderItems.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
     setTotalPrice(total);
   }, [orderItems]);
