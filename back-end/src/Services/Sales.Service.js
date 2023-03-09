@@ -25,7 +25,6 @@ const getAll = async (user) => {
 
 const getById = async (id) => {
   const order = await Sale.findByPk(id, {
-    // include: { all: true },
     include: [
       { model: User, as: 'seller', attributes: ['name'] },
       { model: Product, as: 'products', through: { attributes: ['quantity'] } },
