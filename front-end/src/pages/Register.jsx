@@ -101,6 +101,7 @@ export default function Register() {
       {
         failedRegister && (
           <span
+            id="span_registry"
             data-testid="common_register__element-invalid_register"
           >
             E-mail já cadastrado
@@ -110,49 +111,3 @@ export default function Register() {
     </section>
   );
 }
-
-{ /* <form onSubmit={ onRegisterSubmit }>
-        <label htmlFor="input-name">
-          Nome
-          <input
-            type="text"
-            name="name"
-            id="input-name"
-            data-testid="common_register__input-name"
-            placeholder="Seu nome"
-            value={ registerForm.name }
-            onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="input-email">
-          Email
-          <input
-            type="email"
-            name="email"
-            id="input-email"
-            data-testid="common_register__input-email"
-            placeholder="seu-email@site.com"
-            value={ registerForm.email }
-            onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="input-password">
-          Senha
-          <input
-            type="password"
-            name="password"
-            id="input-password"
-            data-testid="common_register__input-password"
-            placeholder="********"
-            value={ registerForm.password }
-            onChange={ handleChange }
-          />
-        </label>
-        <button
-          data-testid="common_register__button-register"
-          type="submit"
-          disabled={ isDisabled() }
-        >
-          CADASTRAR
-        </button>
-      </form> */ }

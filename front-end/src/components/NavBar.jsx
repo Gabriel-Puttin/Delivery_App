@@ -21,9 +21,10 @@ function NavBar() {
   return (
     <section>
       {user && (
-        <nav>
+        <nav id="nav_bar">
           {user.role === 'customer' && (
             <button
+              id="nav_button_products"
               type="button"
               data-testid="customer_products__element-navbar-link-products"
               onClick={ () => navigate('/customer/products') }
@@ -32,6 +33,7 @@ function NavBar() {
             </button>
           )}
           <button
+            id="nav_button_orders"
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
             onClick={ onOrdersBtnClick }
@@ -40,10 +42,14 @@ function NavBar() {
             {user.role === 'seller' && 'PEDIDOS'}
             {user.role === 'administrator' && 'GERENCIAR USUÁRIOS'}
           </button>
-          <h3 data-testid="customer_products__element-navbar-user-full-name">
+          <h3
+            id="title_hero"
+            data-testid="customer_products__element-navbar-user-full-name"
+          >
             {user.name}
           </h3>
           <button
+            className="loggout"
             data-testid="customer_products__element-navbar-link-logout"
             type="button"
             onClick={ handleLogout }

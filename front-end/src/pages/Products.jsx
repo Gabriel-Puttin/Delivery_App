@@ -1,5 +1,9 @@
+/* eslint-disable react/jsx-max-depth */
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import NavBar from '../components/NavBar';
 import { requestData } from '../services/requests';
 
@@ -59,57 +63,87 @@ function Products() {
   return (
     <section>
       <NavBar />
-      {products.map((product, index) => (
-        <div key={ `product-${product.id}` }>
-          <h4
-            data-testid={ `customer_products__element-card-price-${product.id}` }
+      <div id="body_cards">
+
+        {products.map((product, index) => (
+          <Card
+            // style={ { width: 'rem' } }
+            className="cards_products"
+            key={ `product-${product.id}` }
           >
-            {product.price.replace('.', ',')}
-          </h4>
-          <img
-            data-testid={ `customer_products__img-card-bg-image-${product.id}` }
-            src={ product.url_image }
-            alt={ product.name }
-          />
-          <h3
-            data-testid={ `customer_products__element-card-title-${product.id}` }
-          >
-            {product.name}
-          </h3>
-          <button
-            data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-            type="button"
-            onClick={ () => handleClick(product.id, REMOVE_AMOUNT) }
-          >
-            -
-          </button>
-          <input
-            data-testid={ `customer_products__input-card-quantity-${product.id}` }
-            id={ product.id }
-            type="number"
-            value={ products[index].quantity }
-            onChange={ handleChange }
-            min="0"
-          />
-          <button
-            data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            type="button"
-            onClick={ () => handleClick(product.id, ADD_AMOUNT) }
-          >
-            +
-          </button>
-        </div>
-      ))}
+            <Card.Body>
+              <Card.Title
+                className="price_title"
+                data-testid={ `customer_products__element-card-price-${product.id}` }
+              >
+                {`R$ ${product.price.replace('.', ',')}`}
+              </Card.Title>
+              <Card.Img
+                className="image_product"
+                variant="top"
+                data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+                src={ product.url_image }
+                alt={ product.name }
+              />
+              <Card.Footer
+                className="card_footer"
+              >
+                <Card.Title
+                  className="title_card"
+                  data-testid={ `customer_products__element-card-title-${product.id}` }
+                >
+                  {product.name}
+                </Card.Title>
+                <div className="footer_container_products">
+                  <Button
+                    bsPrefix
+                    id="button_decrescent"
+                    className="button_sum"
+                    data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+                    type="button"
+                    onClick={ () => handleClick(product.id, REMOVE_AMOUNT) }
+                  >
+                    -
+                  </Button>
+                  <input
+                    className="input_value_button"
+                    data-testid={ `customer_products__input-card-quantity-${product.id}` }
+                    id={ product.id }
+                    value={ products[index].quantity }
+                    onChange={ handleChange }
+                    min="0"
+                  />
+                  <Button
+                    bsPrefix
+                    className="button_sum"
+                    data-testid={
+                      `customer_products__button-card-add-item-${product.id}`
+                    }
+                    type="button"
+                    onClick={ () => handleClick(product.id, ADD_AMOUNT) }
+                  >
+                    +
+                  </Button>
+                </div>
+              </Card.Footer>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+
       <button
+        id="checkout"
         data-testid="customer_products__button-cart"
         type="button"
         onClick={ changeRouteClick }
         disabled={ totalPrice === 0 }
       >
         <span
+          id="span_checkout"
           data-testid="customer_products__checkout-bottom-value"
         >
-          { totalPrice.toFixed(2).toString().replace('.', ',') }
+          Ver Carrinho:
+          { ` R$ ${totalPrice.toFixed(2).toString().replace('.', ',')}` }
         </span>
       </button>
     </section>
