@@ -39,12 +39,24 @@ export default function AdminPageForm() {
   };
 
   return (
-    <section>
-      <h2>Cadastrar novo usuário</h2>
-      <form onSubmit={ onRegisterSubmit }>
-        <label htmlFor="input-name">
+    <section
+      className="mb-2"
+      style={ { width: '1200px' } }
+    >
+      <h2 className="ms-2">
+        Cadastrar novo usuário
+      </h2>
+      <form
+        onSubmit={ onRegisterSubmit }
+        className="cards_products d-flex justify-content-evenly"
+      >
+        <label
+          htmlFor="input-name"
+          className="form-label"
+        >
           Nome
           <input
+            className="form-control"
             type="text"
             name="name"
             id="input-name"
@@ -53,9 +65,10 @@ export default function AdminPageForm() {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="input-email">
+        <label htmlFor="input-email" className="form-label">
           Email
           <input
+            className="form-control"
             type="email"
             name="email"
             id="input-email"
@@ -64,9 +77,10 @@ export default function AdminPageForm() {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="input-password">
+        <label htmlFor="input-password" className="form-label">
           Senha
           <input
+            className="form-control"
             type="password"
             name="password"
             id="input-password"
@@ -75,9 +89,10 @@ export default function AdminPageForm() {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="role-select">
+        <label htmlFor="role-select" className="form-label">
           Tipo
           <select
+            className="form-select"
             name="role"
             id="role-select"
             data-testid="admin_manage__select-role"
@@ -89,6 +104,7 @@ export default function AdminPageForm() {
           </select>
         </label>
         <button
+          className="btn btn-primary"
           type="submit"
           data-testid="admin_manage__button-register"
           disabled={ isDisabled() }

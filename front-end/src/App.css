@@ -283,3 +283,28 @@
 .bg-order-sub {
   background: #f2fffcbf;
 }
+
+.bg-t-secondary {
+  background-color: #2fc18c;
+  border-radius: 5px 0 0 5px;
+}
+
+.bg-t-neutral {
+  background-color: #eaf1ef;
+}
+
+.bg-t-primary {
+  background-color: #036b52;
+  color: white;
+}
+
+.bg-t-tertiary {
+  background-color: #421981;
+  color: white;
+}
+
+.bg-t-quaternary {
+  background-color: #056cf9;
+  border-radius: 0 5px 5px 0;
+  color: white;
+}
