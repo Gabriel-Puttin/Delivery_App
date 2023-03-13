@@ -284,27 +284,38 @@
   background: #f2fffcbf;
 }
 
-.bg-t-secondary {
-  background-color: #2fc18c;
-  border-radius: 5px 0 0 5px;
-}
-
-.bg-t-neutral {
+.td-neutral {
   background-color: #eaf1ef;
 }
 
-.bg-t-primary {
+.td-primary {
   background-color: #036b52;
   color: white;
 }
 
-.bg-t-tertiary {
+.td-secondary {
+  background-color: #2fc18c;
+}
+
+.td-secondary-alt {
+  background-color: #2fc18c;
+  color: white;
+}
+
+.td-tertiary {
   background-color: #421981;
   color: white;
 }
 
-.bg-t-quaternary {
+.td-quaternary {
   background-color: #056cf9;
-  border-radius: 0 5px 5px 0;
   color: white;
+}
+
+.td-end {
+  border-radius: 0 5px 5px 0;
+}
+
+.td-start {
+  border-radius: 5px 0 0 5px;
 }

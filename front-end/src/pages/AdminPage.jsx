@@ -8,12 +8,12 @@ export default function AdminPage() {
     <div>
       <NavBar />
       <div
-        className="d-flex flex-column align-items-center"
+        className="mt-4 d-flex flex-column align-items-center"
       >
         <AdminPageForm />
         <section
           style={ { width: '1200px' } }
-          className="d-flex flex-column"
+          className="mt-4 d-flex flex-column"
         >
           <h2 className="ms-2 align-self-start">Lista de usuários</h2>
           <AdminPageTable />

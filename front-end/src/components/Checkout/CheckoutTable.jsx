@@ -10,9 +10,14 @@ const totalId = 'customer_checkout__element-order-total-price';
 
 export default function CheckoutTable({ products, totalPrice, onRemoveItemBtnClick }) {
   return (
-    <section>
-      <h2>Finalizar Pedido</h2>
-      <table>
+    <div
+      style={ { width: '1200px' } }
+      className="cards_products d-flex flex-column"
+    >
+      <table
+        style={ { width: '1150px' } }
+        className="text-center mb-2"
+      >
         <thead>
           <tr>
             <th>Item</th>
@@ -25,26 +30,44 @@ export default function CheckoutTable({ products, totalPrice, onRemoveItemBtnCli
         </thead>
         <tbody>
           {products.map((item, index) => (
-            <tr key={ index }>
-              <td data-testid={ `${itemNumberId}-${index}` }>
+            <tr
+              key={ index }
+              className="border-bottom"
+            >
+              <td
+                data-testid={ `${itemNumberId}-${index}` }
+                className="td-secondary td-start fs-5"
+              >
                 {index + 1}
               </td>
-              <td data-testid={ `${nameId}-${index}` }>
+              <td
+                data-testid={ `${nameId}-${index}` }
+                className="td-neutral fs-5"
+              >
                 {item.name}
               </td>
               <td
                 data-testid={ `${quantityId}-${index}` }
+                className="td-primary fs-5"
               >
                 {item.quantity}
               </td>
-              <td data-testid={ `${unitPriceId}-${index}` }>
+              <td
+                data-testid={ `${unitPriceId}-${index}` }
+                className="td-tertiary fs-5"
+              >
                 {`${item.price.replace('.', ',')}`}
               </td>
-              <td data-testid={ `${subTotalId}-${index}` }>
+              <td
+                data-testid={ `${subTotalId}-${index}` }
+                className="td-quaternary fs-5"
+              >
                 {(item.quantity * item.price).toFixed(2).toString().replace('.', ',')}
               </td>
               <td data-testid={ `${removeBtnId}-${index}` }>
                 <button
+                  style={ { width: '100%' } }
+                  className="btn td-secondary-alt td-end fs-5"
                   type="button"
                   onClick={ () => onRemoveItemBtnClick(index) }
                 >
@@ -55,10 +78,13 @@ export default function CheckoutTable({ products, totalPrice, onRemoveItemBtnCli
           ))}
         </tbody>
       </table>
-      <h3 data-testid={ totalId }>
-        { totalPrice.toFixed(2).toString().replace('.', ',') }
-      </h3>
-    </section>
+      <div className="d-inline fs-5 mb-2">
+        Total: R$
+        <h3 className="ms-1 d-inline fs-5" data-testid={ totalId }>
+          { totalPrice.toFixed(2).toString().replace('.', ',') }
+        </h3>
+      </div>
+    </div>
   );
 }
 

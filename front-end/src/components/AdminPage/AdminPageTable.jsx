@@ -40,35 +40,34 @@ export default function AdminPageTable() {
             >
               <td
                 data-testid={ `admin_manage__element-user-table-item-number-${index}` }
-                className="bg-t-secondary"
+                className="td-secondary fs-5 td-start"
               >
                 {index + 1}
               </td>
               <td
                 data-testid={ `admin_manage__element-user-table-name-${index}` }
-                className="bg-t-neutral"
+                className="td-neutral fs-5"
               >
                 {user.name}
               </td>
               <td
                 data-testid={ `admin_manage__element-user-table-email-${index}` }
-                className="bg-t-primary"
+                className="td-primary fs-5"
               >
                 {user.email}
               </td>
               <td
                 data-testid={ `admin_manage__element-user-table-role-${index}` }
-                className="bg-t-tertiary"
+                className="td-tertiary fs-5"
               >
                 {user.role}
               </td>
               <td
                 data-testid={ `admin_manage__element-user-table-remove-${index}` }
-
               >
                 <button
                   style={ { width: '100%' } }
-                  className="btn bg-t-quaternary"
+                  className="btn td-quaternary td-end fs-5"
                   type="button"
                   onClick={ async () => onRemoveBtnClick(user.id) }
                 >

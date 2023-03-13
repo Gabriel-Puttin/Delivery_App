@@ -35,12 +35,22 @@ export default function Checkout() {
   return (
     <section>
       <NavBar />
-      <CheckoutTable
-        products={ products }
-        totalPrice={ totalPrice }
-        onRemoveItemBtnClick={ onRemoveItemBtnClick }
-      />
-      <CheckoutForm finishOrder={ finishOrder } />
+      <div
+        className="d-flex flex-column align-items-center"
+      >
+        <section
+          style={ { width: '1200px' } }
+          className="my-4 d-flex flex-column"
+        >
+          <h2 className="ms-2 align-self-start">Finalizar Pedido</h2>
+          <CheckoutTable
+            products={ products }
+            totalPrice={ totalPrice }
+            onRemoveItemBtnClick={ onRemoveItemBtnClick }
+          />
+        </section>
+        <CheckoutForm finishOrder={ finishOrder } />
+      </div>
     </section>
   );
 }

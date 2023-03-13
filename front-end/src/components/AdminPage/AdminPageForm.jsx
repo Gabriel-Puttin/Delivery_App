@@ -115,6 +115,7 @@ export default function AdminPageForm() {
       {
         failedRegister && (
           <span
+            className="form-text ms-3"
             data-testid="admin_manage__element-invalid-register"
           >
             E-mail já cadastrado

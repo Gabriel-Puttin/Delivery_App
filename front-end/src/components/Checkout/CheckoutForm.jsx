@@ -32,12 +32,24 @@ export default function CheckoutForm({ finishOrder }) {
   };
 
   return (
-    <section>
-      <form onSubmit={ onFinishOrderSubmit }>
-        <h2>Detalhes e Endereço para Entrega</h2>
-        <label htmlFor="seller">
+    <section
+      className="mb-2"
+      style={ { width: '1200px' } }
+    >
+      <h2 className="ms-2">
+        Detalhes e Endereço para Entrega
+      </h2>
+      <form
+        onSubmit={ onFinishOrderSubmit }
+        className="cards_products d-flex flex-wrap justify-content-evenly"
+      >
+        <label
+          htmlFor="seller"
+          className="form-label"
+        >
           P. Vendedora Responsável:
           <select
+            className="form-select"
             name="sellerId"
             id="seller"
             data-testid="customer_checkout__select-seller"
@@ -56,9 +68,14 @@ export default function CheckoutForm({ finishOrder }) {
             }
           </select>
         </label>
-        <label htmlFor="address">
+        <label
+          style={ { width: '600px' } }
+          htmlFor="address"
+          className="form-label"
+        >
           Endereço
           <input
+            className="form-control"
             name="deliveryAddress"
             type="text"
             id="address"
@@ -67,9 +84,13 @@ export default function CheckoutForm({ finishOrder }) {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="number">
+        <label
+          htmlFor="number"
+          className="form-label"
+        >
           Número
           <input
+            className="form-control"
             type="number"
             name="deliveryNumber"
             id="number"
@@ -79,6 +100,7 @@ export default function CheckoutForm({ finishOrder }) {
           />
         </label>
         <button
+          className="btn td-primary my-3"
           type="submit"
           data-testid="customer_checkout__button-submit-order"
         >
