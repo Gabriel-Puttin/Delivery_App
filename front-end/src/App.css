@@ -1,61 +1,59 @@
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/math-plus.css');
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
+
 /* ----------------- tela de login -------------------- */
 #form-login {
-  box-sizing: border-box;
-  position: absolute;
-  left: 39.06%;
-  right: 38.8%;
-  top: 46.39%;
-  bottom: 12.5%;
   background: #eaf1ef;
   border: 1px solid #b1c2be;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  width: 320px;
+  bottom: 12.5%;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
   height: 285px;
+  left: 39.06%;
+  position: absolute;
+  right: 38.8%;
+  top: 46.39%;
+  width: 320px;
 }
 
 #btn-login {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 17px;
   align-items: center;
-  text-align: center;
-  line-height: 50%;
-
-  width: 250px;
-  height: 30px;
+  background: #036b52;
   border-radius: 10px;
   color: #f2fffc;
-  background: #036b52;
+  font-family: Roboto;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  height: 30px;
+  line-height: 50%;
   margin-left: 35px;
+  text-align: center;
+  width: 250px;
 }
 
 #btn-outline-green {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 50%;
   align-items: center;
-  text-align: center;
-
-  color: #036b52;
-  background-color: white !important;
-  box-sizing: border-box;
-
+  background-color: white ! important;
   border: 2px solid #036b52;
   border-radius: 10px;
-  width: 250px;
+  box-sizing: border-box;
+  color: #036b52;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
   height: 30px;
+  line-height: 50%;
   margin-left: 35px;
   margin-top: 10px;
+  text-align: center;
+  width: 250px;
 }
 
 #main-login {
@@ -68,9 +66,9 @@
 }
 
 .input_form_login {
-  width: 250px;
   height: 40px;
   margin: auto;
+  width: 250px;
 }
 
 .label_form_login {
@@ -79,135 +77,136 @@
 }
 
 #spam_text {
+  margin-left: 100px;
   position: absolute;
   top: 92%;
-  margin-left: 100px;
 }
+
 /* ----------------- tela de registro -------------------- */
 .section {
-  width: 100vw;
-  height: 100vh;
+  align-items: center;
   display: flex;
   flex-direction: row;
+  height: 100vh;
   justify-content: center;
-  align-items: center;
+  width: 100vw;
 }
+
 #form_registry {
-  width: 300px;
-  height: 337px;
   background: #eaf1ef;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  height: 337px;
   padding: 20px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 300px;
 }
 
 #btn_registry {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 17px;
   align-items: center;
-  text-align: center;
-  line-height: 50%;
-
-  width: 260px;
-  height: 40px;
+  background: #036b52;
   border-radius: 10px;
   color: #f2fffc;
-  background: #036b52;
+  font-family: Roboto;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  height: 40px;
+  line-height: 50%;
+  text-align: center;
+  width: 260px;
 }
 
 #title_registry {
-  text-align: center;
   position: absolute;
+  text-align: center;
   top: 15%;
 }
 
 
 #span_registry {
   position: absolute;
-  top: 74%; 
+  top: 74%;
 }
 
 /* --------------------página de produtos -------------------- */
-
 #nav_bar {
-  display: flex;
   box-sizing: border-box;
+  display: flex;
 }
 
 #nav_button_products {
-  width: 300px;
-  background-color: #2FC18C;
-  color: black;
+  background-color: #2fc18c;
   border: none;
-  font-weight: 700;
+  color: black;
   font-size: 20px;
+  font-weight: 700;
+  width: 300px;
 }
 
 
 #nav_button_orders {
-  width: 700px;
-  text-align: inherit;
-  background-color: #036B52;
-  color: white;
+  background-color: #036b52;
   border: none;
-  font-weight: 700;
-  font-size: larger;
+  color: white;
   flex-grow: 1;
-  padding-left: 50px;
+  font-size: larger;
   font-size: 20px;
+  font-weight: 700;
+  padding-left: 50px;
+  text-align: inherit;
+  width: 700px;
 }
 
 #title_hero {
-  background-color:#421981;
+  background-color: #421981;
   color: white;
   flex-grow: 1;
-  margin-bottom: 0;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
   font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom: 0;
+  text-align: center;
 }
 
 .loggout {
-  background-color: #056CF9;
-  color: white;
+  background-color: #056cf9;
   border: none;
+  color: white;
   flex-grow: 0.3;
-  font-weight: 700;
   font-size: 20px;
+  font-weight: 700;
 }
 
 #body_cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content:start;
+  justify-content: start;
   margin-left: 90px;
 }
 
 .cards_products {
-  margin: 10px 10px 10px 10px;
   align-items: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px;
 }
 
 .price_title {
-  background-color: #F2FFFC;
-  width: 150px;
-  text-align: center;
-  margin-top: 10px;
+  background-color: #f2fffc;
   font-size: 30px;
+  margin-top: 10px;
+  text-align: center;
+  width: 150px;
 }
 
 .title_card {
-  font-size: 20px;
-  text-align: center;
-  font-weight: 300;
   color: black;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
 }
+
 .image_product {
-  width: auto;
   height: 250px;
+  width: auto;
 }
 
 #button_decrescent {
@@ -215,25 +214,25 @@
 }
 
 .button_sum {
-  width: 35px;
-  height: 38px;
+  background-color: #036b52;
   border-radius: 0% 20% 20% 0%;
-  color:white;
-  background-color: #036B52;
+  color: white;
   font-size: 16px;
+  height: 38px;
+  width: 35px;
 }
 
 .card_footer {
   align-items: center;
-  background-color: #EAF1EF;
-  width: 270px;
+  background-color: #eaf1ef;
   height: 120px;
+  width: 270px;
 }
 
 .input_value_button {
-  width: 60px;
   height: 38px;
   text-align: center;
+  width: 60px;
 }
 
 .card-body {
@@ -249,18 +248,38 @@
 }
 
 #checkout {
-  background-color: #036B52;
-  color: #EAF1EF;
+  background-color: #036b52;
+  border-radius: 10px;
+  color: #eaf1ef;
+  font-size: 30px;
+  left: 80%;
+  padding: 5px;
   position: absolute;
   position: fixed;
-  width: 350px;
-  font-size: 30px;
-  border-radius: 10px;
-  left: 80%;
   top: 90%;
-  padding: 5px;
+  width: 350px;
 }
 
 #span_checkout {
   font-weight: bold;
+}
+
+.bg-pending {
+  background-color: #ccb800bf;
+}
+
+.bg-in-transit {
+  background-color: #66cc00bf;
+}
+
+.bg-done {
+  background-color: #00cc9bbf;
+}
+
+.bg-order-card {
+  background: #eaf1ef;
+}
+
+.bg-order-sub {
+  background: #f2fffcbf;
 }
