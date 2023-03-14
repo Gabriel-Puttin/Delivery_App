@@ -78,11 +78,11 @@ export default function CheckoutTable({ products, totalPrice, onRemoveItemBtnCli
           ))}
         </tbody>
       </table>
-      <div className="d-inline fs-5 mb-2">
-        Total: R$
-        <h3 className="ms-1 d-inline fs-5" data-testid={ totalId }>
+      <div className="fs-5 fw-bold mb-2">
+        <span>Total: R$ </span>
+        <span data-testid={ totalId }>
           { totalPrice.toFixed(2).toString().replace('.', ',') }
-        </h3>
+        </span>
       </div>
     </div>
   );

@@ -138,11 +138,11 @@ function Products() {
         onClick={ changeRouteClick }
         disabled={ totalPrice === 0 }
       >
+        <span>Ver Carrinho: </span>
         <span
           id="span_checkout"
           data-testid="customer_products__checkout-bottom-value"
         >
-          Ver Carrinho:
           { ` R$ ${totalPrice.toFixed(2).toString().replace('.', ',')}` }
         </span>
       </button>
