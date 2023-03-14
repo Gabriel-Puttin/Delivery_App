@@ -14,6 +14,11 @@ const checkDeliveryId = 'customer_order_details__button-delivery-check';
 const preparingCheckId = 'seller_order_details__button-preparing-check';
 const dispatchCheckId = 'seller_order_details__button-dispatch-check';
 
+const STATUS_PENDING = 'Pendente';
+const STATUS_PREP = 'Preparando';
+const STATUS_TRANSIT = 'Em Trânsito';
+const STATUS_DONE = 'Entregue';
+
 export default function OrderDetailsHeader({ userRole }) {
   const {
     user,
@@ -32,39 +37,60 @@ export default function OrderDetailsHeader({ userRole }) {
     await fetchOrderDetails(id);
   };
 
+  const getStatusColor = (status) => {
+    if (status === STATUS_PENDING) return 'bg-pending';
+    if (status === STATUS_PREP) return 'bg-in-transit';
+    if (status === STATUS_TRANSIT) return 'bg-in-transit';
+    if (status === STATUS_DONE) return 'bg-done';
+  };
+
   return (
-    <section>
-      <h2>Detalhe do pedido</h2>
+    <section
+      style={ { width: '1200px' } }
+      className="align-items-center"
+    >
       {orderInfo && (
-        <div>
-          <p
-            data-testid={ `${userRole}_${orderId}` }
-          >
-            {orderInfo.id}
-          </p>
-          { userRole === 'customer' && (
-            <p
-              data-testid={ sellerId }
+        <div
+          className="d-flex fs-5 p-2
+          align-items-center justify-content-between td-neutral"
+        >
+          <div className="fw-bold">
+            <span>Pedido </span>
+            <span
+              data-testid={ `${userRole}_${orderId}` }
             >
-              { orderInfo.seller.name }
-            </p>
+              {orderInfo.id}
+            </span>
+          </div>
+          { userRole === 'customer' && (
+            <div>
+              <span>P. Vend: </span>
+              <span
+                data-testid={ sellerId }
+              >
+                { orderInfo.seller.name }
+              </span>
+            </div>
           )}
-          <p
+          <span
+            className="fw-bold"
             data-testid={ `${userRole}_${dateId}` }
           >
             {moment(orderInfo.saleDate).format('DD/MM/YYYY')}
-          </p>
-          <p
+          </span>
+          <span
+            className={ `rounded px-2 fw-bold ${getStatusColor(orderInfo.status)}` }
             data-testid={ `${userRole}_${statusId}${orderInfo.id}` }
           >
             {orderInfo.status}
-          </p>
+          </span>
           {userRole === 'customer' && (
             <button
+              className="btn fw-bold td-primary"
               type="button"
               data-testid={ checkDeliveryId }
-              disabled={ orderInfo.status !== 'Em Trânsito' }
-              onClick={ async () => handleStatusUpdate('Entregue') }
+              disabled={ orderInfo.status !== STATUS_TRANSIT }
+              onClick={ async () => handleStatusUpdate(STATUS_DONE) }
             >
               Marcar como entregue
             </button>
@@ -72,18 +98,20 @@ export default function OrderDetailsHeader({ userRole }) {
           {userRole === 'seller' && (
             <div>
               <button
+                className="btn fw-bold td-secondary-alt me-2"
                 type="button"
                 data-testid={ preparingCheckId }
-                disabled={ orderInfo.status !== 'Pendente' }
-                onClick={ async () => handleStatusUpdate('Preparando') }
+                disabled={ orderInfo.status !== STATUS_PENDING }
+                onClick={ async () => handleStatusUpdate(STATUS_PREP) }
               >
                 PREPARAR PEDIDO
               </button>
               <button
+                className="btn fw-bold td-primary"
                 type="button"
                 data-testid={ dispatchCheckId }
-                disabled={ orderInfo.status !== 'Preparando' }
-                onClick={ async () => handleStatusUpdate('Em Trânsito') }
+                disabled={ orderInfo.status !== STATUS_PREP }
+                onClick={ async () => handleStatusUpdate(STATUS_TRANSIT) }
               >
                 SAIU PARA ENTREGA
               </button>

@@ -32,42 +32,46 @@ export default function CheckoutTable({ products, totalPrice, onRemoveItemBtnCli
           {products.map((item, index) => (
             <tr
               key={ index }
-              className="border-bottom"
+              className="border-bottom fs-5"
             >
               <td
                 data-testid={ `${itemNumberId}-${index}` }
-                className="td-secondary td-start fs-5"
+                className="td-secondary td-start"
               >
                 {index + 1}
               </td>
               <td
                 data-testid={ `${nameId}-${index}` }
-                className="td-neutral fs-5"
+                className="td-neutral"
               >
                 {item.name}
               </td>
               <td
                 data-testid={ `${quantityId}-${index}` }
-                className="td-primary fs-5"
+                className="td-primary"
               >
                 {item.quantity}
               </td>
-              <td
-                data-testid={ `${unitPriceId}-${index}` }
-                className="td-tertiary fs-5"
-              >
-                {`${item.price.replace('.', ',')}`}
+              <td className="td-tertiary">
+                <span>R$ </span>
+                <span
+                  data-testid={ `${unitPriceId}-${index}` }
+                >
+                  {`${item.price.replace('.', ',')}`}
+                </span>
               </td>
-              <td
-                data-testid={ `${subTotalId}-${index}` }
-                className="td-quaternary fs-5"
-              >
-                {(item.quantity * item.price).toFixed(2).toString().replace('.', ',')}
+              <td className="td-quaternary">
+                <span>R$ </span>
+                <span
+                  data-testid={ `${subTotalId}-${index}` }
+                >
+                  {(item.quantity * item.price).toFixed(2).toString().replace('.', ',')}
+                </span>
               </td>
               <td data-testid={ `${removeBtnId}-${index}` }>
                 <button
                   style={ { width: '100%' } }
-                  className="btn td-secondary-alt td-end fs-5"
+                  className="btn td-secondary-alt td-end"
                   type="button"
                   onClick={ () => onRemoveItemBtnClick(index) }
                 >

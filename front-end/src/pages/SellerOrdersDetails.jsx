@@ -7,8 +7,15 @@ function SellerOrdersDetails() {
   return (
     <section>
       <NavBar />
-      <OrderDetailsHeader userRole="seller" />
-      <OrderDetailsTable userRole="seller" />
+      <section className="mt-4 d-flex flex-column align-items-center">
+        <div>
+          <h2 className="ms-2 align-self-start">Detalhe do pedido</h2>
+          <div className="cards_products">
+            <OrderDetailsHeader userRole="seller" />
+            <OrderDetailsTable userRole="seller" />
+          </div>
+        </div>
+      </section>
     </section>
   );
 }

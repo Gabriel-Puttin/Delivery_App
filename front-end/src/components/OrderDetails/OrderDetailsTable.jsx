@@ -13,8 +13,14 @@ export default function OrderDetailsTable({ userRole }) {
   const { orderItems, totalPrice } = useContext(DeliveryAppContext);
 
   return (
-    <section>
-      <table>
+    <section
+      style={ { width: '1200px' } }
+      className="align-items-center d-flex flex-column mt-3"
+    >
+      <table
+        style={ { width: '1150px' } }
+        className="text-center mb-2"
+      >
         <thead>
           <tr>
             <th>Item</th>
@@ -27,37 +33,61 @@ export default function OrderDetailsTable({ userRole }) {
         <tbody>
           {
             orderItems.map((item, index) => (
-              <tr key={ `item-${index}` }>
-                <td data-testid={ `${userRole}_${itemNumberId}-${index}` }>
+              <tr
+                key={ `item-${index}` }
+                className="border-bottom fs-5"
+              >
+                <td
+                  data-testid={ `${userRole}_${itemNumberId}-${index}` }
+                  className="td-secondary td-start"
+                >
                   {index + 1}
                 </td>
-                <td data-testid={ `${userRole}_${nameId}-${index}` }>
+                <td
+                  data-testid={ `${userRole}_${nameId}-${index}` }
+                  className="td-neutral"
+                >
                   {item.name}
                 </td>
-                <td data-testid={ `${userRole}_${quantityId}-${index}` }>
+                <td
+                  data-testid={ `${userRole}_${quantityId}-${index}` }
+                  className="td-primary"
+                >
                   {item.quantity}
                 </td>
-                <td data-testid={ `${userRole}_${unitPriceId}-${index}` }>
-                  {`${item.price.replace('.', ',')}`}
+                <td className="td-tertiary">
+                  <span>R$ </span>
+                  <span
+                    data-testid={ `${userRole}_${unitPriceId}-${index}` }
+                  >
+                    {`${item.price.replace('.', ',')}`}
+                  </span>
+
                 </td>
-                <td data-testid={ `${userRole}_${subTotalId}-${index}` }>
-                  {
-                    (item.quantity * item.price)
-                      .toFixed(2)
-                      .toString()
-                      .replace('.', ',')
-                  }
+                <td className="td-quaternary td-end">
+                  <span>R$ </span>
+                  <span data-testid={ `${userRole}_${subTotalId}-${index}` }>
+                    {
+                      (item.quantity * item.price)
+                        .toFixed(2)
+                        .toString()
+                        .replace('.', ',')
+                    }
+                  </span>
                 </td>
               </tr>
             ))
           }
         </tbody>
       </table>
-      <h3
-        data-testid={ `${userRole}_${totalId}` }
-      >
-        {totalPrice.toFixed(2).toString().replace('.', ',')}
-      </h3>
+      <div className="fs-5 fw-bold mb-2">
+        <span>Total: R$ </span>
+        <span
+          data-testid={ `${userRole}_${totalId}` }
+        >
+          {totalPrice.toFixed(2).toString().replace('.', ',')}
+        </span>
+      </div>
     </section>
   );
 }
